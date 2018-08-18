@@ -7,10 +7,23 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
+    jcenter()
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'io.github.seik.kotlin-telegram-bot:telegram:0.3.2'
+
+    // Koin
+    implementation "org.koin:koin-core:0.9.3"
+    testImplementation "org.koin:koin-test:0.9.3"
+
+    // Hamcrest
+    testImplementation 'com.natpryce:hamkrest:1.4.2.0'
+
+    // Mockito
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
 }
 
 compileKotlin {
