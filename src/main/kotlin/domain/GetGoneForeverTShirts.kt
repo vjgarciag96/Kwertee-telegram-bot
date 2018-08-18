@@ -2,8 +2,8 @@ package domain
 
 import io.reactivex.Observable
 import webscrapper.QwerteeWebScrapper
-import webscrapper.mapper.GoneForeverTShirtDTOToGoneForeverTShirtMapper
-import webscrapper.model.GoneForeverTShirt
+import model.GoneForeverTShirtDTOToGoneForeverTShirtMapper
+import model.GoneForeverTShirt
 
 class GetGoneForeverTShirts(private val webScrapper: QwerteeWebScrapper,
                             private val mapper: GoneForeverTShirtDTOToGoneForeverTShirtMapper) {

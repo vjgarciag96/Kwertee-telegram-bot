@@ -1,7 +1,4 @@
-package webscrapper.mapper
-
-import webscrapper.model.GoneForeverTShirt
-import webscrapper.model.GoneForeverTShirtDTO
+package model
 
 class GoneForeverTShirtDTOToGoneForeverTShirtMapper {
 
@@ -9,8 +6,8 @@ class GoneForeverTShirtDTOToGoneForeverTShirtMapper {
             toMap.eurPrice.plus("€"),
             toMap.usdPrice.plus("\$"),
             toMap.gbpPrice.plus("£"),
-            toMap.tShirtTitle,
-            "https:${toMap.tShirtImageUrl}"
+            toMap.title,
+            "https:${toMap.imageUrl}"
     )
 
     fun map(toMap: List<GoneForeverTShirtDTO>): List<GoneForeverTShirt> {

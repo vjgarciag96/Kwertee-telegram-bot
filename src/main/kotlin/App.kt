@@ -11,7 +11,7 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
 import webscrapper.QwerteeWebScrapper
-import webscrapper.mapper.GoneForeverTShirtDTOToGoneForeverTShirtMapper
+import model.GoneForeverTShirtDTOToGoneForeverTShirtMapper
 
 object BotTokenProperty {
     const val BOT_TOKEN = "bot-token-property"
@@ -19,22 +19,34 @@ object BotTokenProperty {
 }
 
 val myBotModule = applicationContext {
+    // commands
     bean { HelloWorldCommand() }
+    bean { GoneForeverTShirtsCommand(get()) }
+
+    // use cases
+    bean { GetGoneForeverTShirts(get(), get()) }
+
+    // mapper
+    bean { GoneForeverTShirtDTOToGoneForeverTShirtMapper() }
+
+    // web scrapper
+    bean {
+        QwerteeWebScrapper(Jsoup.connect(getProperty(QWERTEE_URL))
+                .method(Connection.Method.GET))
+    }
+
+    // bot
     bean {
         MyBot(Bot.Builder().apply {
             this.token = getProperty(BOT_TOKEN)
             this.updater.dispatcher.apply {
                 val helloWorldCommand: HelloWorldCommand = get()
+                val goneForeverTShirtsCommand: GoneForeverTShirtsCommand = get()
                 command(helloWorldCommand.commandName, helloWorldCommand.commandAction)
+                command(goneForeverTShirtsCommand.commandName, goneForeverTShirtsCommand.commandAction)
             }
         }.build())
     }
-    bean {
-        QwerteeWebScrapper(Jsoup.connect(getProperty(QWERTEE_URL))
-                .method(Connection.Method.GET))
-    }
-    bean { GoneForeverTShirtDTOToGoneForeverTShirtMapper() }
-    bean { GetGoneForeverTShirts(get(), get()) }
 }
 
 class BotApplication : KoinComponent {

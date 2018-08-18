@@ -3,7 +3,7 @@ package webscrapper
 import com.github.florent37.rxjsoup.RxJsoup
 import io.reactivex.Observable
 import org.jsoup.Connection
-import webscrapper.model.GoneForeverTShirtDTO
+import model.GoneForeverTShirtDTO
 
 class QwerteeWebScrapper(private val connection: Connection) {
 

@@ -1,5 +1,6 @@
 package bot
 
+import domain.GetGoneForeverTShirts
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.entities.Update
 
@@ -10,10 +11,33 @@ abstract class BotCommand(
         val commandAction: CommandAction
 )
 
-class HelloWorldCommand: BotCommand("helloWorld", object : CommandAction {
-    override fun invoke(bot: Bot, update: Update, args: List<String>) {
-        update.message?.let {
-            bot.sendMessage(it.chat.id, "Hello World!!")
-        }
-    }
-})
+class HelloWorldCommand : BotCommand("helloworld",
+        object : CommandAction {
+            override fun invoke(bot: Bot, update: Update, args: List<String>) {
+                update.message?.let {
+                    bot.sendMessage(it.chat.id, "Hello World!!")
+                }
+            }
+        })
+
+class GoneForeverTShirtsCommand(
+        private val getGoneForeverTShirts: GetGoneForeverTShirts
+) : BotCommand("goneforever",
+        object : CommandAction {
+            override fun invoke(bot: Bot, update: Update, args: List<String>) {
+                getGoneForeverTShirts.invoke()
+                        .subscribe {
+                            it.forEach {
+                                val tShirt = it
+                                update.message?.let {
+                                    bot.sendPhoto(
+                                            it.chat.id,
+                                            tShirt.imageUrl,
+                                            caption = tShirt.title
+                                                    .plus("\n")
+                                                    .plus("Price:${tShirt.eurPrice}|${tShirt.usdPrice}|${tShirt.gbpPrice}"))
+                                }
+                            }
+                        }
+            }
+        })
