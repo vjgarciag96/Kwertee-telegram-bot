@@ -19,6 +19,15 @@ dependencies {
     implementation "org.koin:koin-core:0.9.3"
     testImplementation "org.koin:koin-test:0.9.3"
 
+    // JSoup
+    implementation 'org.jsoup:jsoup:1.11.3'
+
+    // RxJava2
+    implementation 'io.reactivex.rxjava2:rxjava:2.0.7'
+
+    // rxSoup
+    implementation 'com.github.florent37:rxjsoup:1.0.4'
+
     // Hamcrest
     testImplementation 'com.natpryce:hamkrest:1.4.2.0'
 
