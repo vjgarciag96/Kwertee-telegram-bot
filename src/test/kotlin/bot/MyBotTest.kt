@@ -1,4 +1,5 @@
-import bot.MyBot
+package bot
+
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import me.ivmg.telegram.Bot

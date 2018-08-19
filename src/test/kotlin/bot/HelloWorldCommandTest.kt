@@ -1,4 +1,5 @@
-import bot.HelloWorldCommand
+package bot
+
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import com.nhaarman.mockitokotlin2.*
@@ -6,6 +7,7 @@ import me.ivmg.telegram.Bot
 import me.ivmg.telegram.entities.Chat
 import me.ivmg.telegram.entities.Message
 import me.ivmg.telegram.entities.Update
+import myBotModule
 import org.junit.Before
 import org.junit.Test
 import org.koin.standalone.StandAloneContext.startKoin

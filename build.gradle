@@ -23,7 +23,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.11.3'
 
     // RxJava2
-    implementation 'io.reactivex.rxjava2:rxjava:2.0.7'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
 
     // rxSoup
     implementation 'com.github.florent37:rxjsoup:1.0.4'
