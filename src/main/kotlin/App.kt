@@ -12,6 +12,8 @@ import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
 import webscrapper.QwerteeWebScrapper
 import model.GoneForeverTShirtDTOToGoneForeverTShirtMapper
+import webscrapper.RxJsoupWebScrapper
+import webscrapper.RxWebScrapper
 
 object BotTokenProperty {
     const val BOT_TOKEN = "bot-token-property"
@@ -30,8 +32,9 @@ val myBotModule = applicationContext {
     bean { GoneForeverTShirtDTOToGoneForeverTShirtMapper() }
 
     // web scrapper
+    bean { RxJsoupWebScrapper() as RxWebScrapper}
     bean {
-        QwerteeWebScrapper(Jsoup.connect(getProperty(QWERTEE_URL))
+        QwerteeWebScrapper(get(), Jsoup.connect(getProperty(QWERTEE_URL))
                 .method(Connection.Method.GET))
     }
 
