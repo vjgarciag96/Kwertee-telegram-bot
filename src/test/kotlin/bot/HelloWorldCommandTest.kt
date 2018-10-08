@@ -31,7 +31,7 @@ class HelloWorldCommandTest : AutoCloseKoinTest() {
 
     @Test
     fun `Should have helloWorld as command name`() {
-        assertThat(helloWorldCommand.commandName, equalTo("helloWorld"))
+        assertThat(helloWorldCommand.commandName, equalTo("helloworld"))
     }
 
     @Test
