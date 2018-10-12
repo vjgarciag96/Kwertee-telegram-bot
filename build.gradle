@@ -1,7 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.2.51'
 }
-
 group 'vjgarcia'
 version '1.0-SNAPSHOT'
 
@@ -9,6 +8,19 @@ repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
     jcenter()
+}
+
+configurations {
+    detekt
+}
+
+task detekt(type: JavaExec) {
+    main = "io.gitlab.arturbosch.detekt.cli.Main"
+    classpath = configurations.detekt
+    def input = "$projectDir"
+    def config = "$projectDir/../config/detekt.yml"
+    def params = ['-i', input, '-c', config, '-f']
+    args(params)
 }
 
 dependencies {
@@ -33,6 +45,8 @@ dependencies {
 
     // Mockito
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
+
+    detekt "io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.RC9.2"
 }
 
 compileKotlin {

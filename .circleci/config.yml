@@ -31,7 +31,4 @@ jobs:
 
     # run tests
     - run: ./gradlew test
-    # run detekt
-    - run: ./gradlew detekt
-    - run: ./gradlew ktlint
-    - run: ./gradlew findbugs
+    - run: ./gradlew check
