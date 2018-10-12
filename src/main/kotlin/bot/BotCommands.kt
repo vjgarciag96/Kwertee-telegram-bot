@@ -7,8 +7,8 @@ import me.ivmg.telegram.entities.Update
 typealias CommandAction = (Bot, Update, List<String>) -> Unit
 
 abstract class BotCommand(
-        val commandName: String = "default",
-        val commandAction: CommandAction
+    val commandName: String = "default",
+    val commandAction: CommandAction
 )
 
 class HelloWorldCommand : BotCommand("helloworld",
@@ -21,7 +21,7 @@ class HelloWorldCommand : BotCommand("helloworld",
         })
 
 class GoneForeverTShirtsCommand(
-        private val getGoneForeverTShirts: GetGoneForeverTShirts
+    private val getGoneForeverTShirts: GetGoneForeverTShirts
 ) : BotCommand("goneforever",
         object : CommandAction {
             override fun invoke(bot: Bot, update: Update, args: List<String>) {

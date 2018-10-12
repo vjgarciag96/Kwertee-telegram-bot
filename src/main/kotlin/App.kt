@@ -32,7 +32,7 @@ val myBotModule = applicationContext {
     bean { GoneForeverTShirtDTOToGoneForeverTShirtMapper() }
 
     // web scrapper
-    bean { RxJsoupWebScrapper() as RxWebScrapper}
+    bean { RxJsoupWebScrapper() as RxWebScrapper }
     bean {
         QwerteeWebScrapper(get(), Jsoup.connect(getProperty(QWERTEE_URL))
                 .method(Connection.Method.GET))
@@ -67,4 +67,3 @@ fun main(args: Array<String>) {
             QWERTEE_URL to "https://www.qwertee.com"))
     BotApplication()
 }
-
