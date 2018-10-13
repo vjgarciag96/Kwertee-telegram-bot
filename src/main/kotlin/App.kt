@@ -23,6 +23,7 @@ object BotTokenProperty {
 val myBotModule = applicationContext {
     // commands
     bean { HelloWorldCommand() }
+    bean { StartCommand() }
     bean { GoneForeverTShirtsCommand(get()) }
 
     // use cases
@@ -32,7 +33,7 @@ val myBotModule = applicationContext {
     bean { GoneForeverTShirtDTOToGoneForeverTShirtMapper() }
 
     // web scrapper
-    bean { RxJsoupWebScrapper() as RxWebScrapper}
+    bean { RxJsoupWebScrapper() as RxWebScrapper }
     bean {
         QwerteeWebScrapper(get(), Jsoup.connect(getProperty(QWERTEE_URL))
                 .method(Connection.Method.GET))
@@ -44,8 +45,10 @@ val myBotModule = applicationContext {
             this.token = getProperty(BOT_TOKEN)
             this.updater.dispatcher.apply {
                 val helloWorldCommand: HelloWorldCommand = get()
+                val startCommand: StartCommand = get()
                 val goneForeverTShirtsCommand: GoneForeverTShirtsCommand = get()
                 command(helloWorldCommand.commandName, helloWorldCommand.commandAction)
+                command(startCommand.commandName, startCommand.commandAction)
                 command(goneForeverTShirtsCommand.commandName, goneForeverTShirtsCommand.commandAction)
             }
         }.build())
