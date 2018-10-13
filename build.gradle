@@ -60,6 +60,9 @@ dependencies {
     // rxSoup
     implementation 'com.github.florent37:rxjsoup:1.0.4'
 
+    // yaml
+    implementation 'org.yaml:snakeyaml:1.21'
+
     // Hamcrest
     testImplementation 'com.natpryce:hamkrest:1.4.2.0'
 
