@@ -66,7 +66,7 @@ class BotApplication : KoinComponent {
 
 fun main(args: Array<String>) {
     startKoin(listOf(myBotModule), extraProperties = mapOf(
-            BOT_TOKEN to "ANY_BOT_TOKEN",
+            BOT_TOKEN to Config.BOT_TOKEN,
             QWERTEE_URL to "https://www.qwertee.com"))
     BotApplication()
 }
