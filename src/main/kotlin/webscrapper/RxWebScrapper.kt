@@ -11,5 +11,4 @@ interface RxWebScrapper {
 class RxJsoupWebScrapper : RxWebScrapper {
     override fun connect(connection: Connection): Observable<Connection.Response> =
             RxJsoup.connect(connection)
-
 }

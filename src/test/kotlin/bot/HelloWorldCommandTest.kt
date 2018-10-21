@@ -14,7 +14,6 @@ import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
 import org.koin.test.AutoCloseKoinTest
 
-
 class HelloWorldCommandTest : AutoCloseKoinTest() {
 
     private val bot: Bot = mock()

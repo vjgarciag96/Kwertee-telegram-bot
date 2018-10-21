@@ -4,8 +4,10 @@ import io.reactivex.Observable
 import org.jsoup.Connection
 import model.GoneForeverTShirtDTO
 
-class QwerteeWebScrapper(private val rxWebScrapper: RxWebScrapper,
-                         private val connection: Connection) {
+class QwerteeWebScrapper(
+    private val rxWebScrapper: RxWebScrapper,
+    private val connection: Connection
+) {
 
     fun getGoneForeverTShirts(): Observable<List<GoneForeverTShirtDTO>> {
         return rxWebScrapper.connect(connection).map {

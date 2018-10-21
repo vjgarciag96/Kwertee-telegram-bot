@@ -81,4 +81,3 @@ fun main(args: Array<String>) {
             QWERTEE_URL to "https://www.qwertee.com"))
     BotApplication()
 }
-
