@@ -1,7 +1,10 @@
 import BotTokenProperty.BOT_TOKEN
 import BotTokenProperty.QWERTEE_URL
 import bot.*
+import data.LocalSubscriptionsDataSource
+import data.SubscriptionsRepository
 import domain.GetGoneForeverTShirts
+import domain.Subscribe
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.dispatcher.command
 import org.jsoup.Connection
@@ -25,9 +28,15 @@ val myBotModule = applicationContext {
     bean { HelloWorldCommand() }
     bean { StartCommand() }
     bean { GoneForeverTShirtsCommand(get()) }
+    bean { SubscribeCommand(get()) }
 
     // use cases
     bean { GetGoneForeverTShirts(get(), get()) }
+    bean { Subscribe(get()) }
+
+    // data
+    bean { SubscriptionsRepository(get()) }
+    bean { LocalSubscriptionsDataSource() }
 
     // mapper
     bean { GoneForeverTShirtDTOToGoneForeverTShirtMapper() }
@@ -47,9 +56,11 @@ val myBotModule = applicationContext {
                 val helloWorldCommand: HelloWorldCommand = get()
                 val startCommand: StartCommand = get()
                 val goneForeverTShirtsCommand: GoneForeverTShirtsCommand = get()
+                val subscribeCommand: SubscribeCommand = get()
                 command(helloWorldCommand.commandName, helloWorldCommand.commandAction)
                 command(startCommand.commandName, startCommand.commandAction)
                 command(goneForeverTShirtsCommand.commandName, goneForeverTShirtsCommand.commandAction)
+                command(subscribeCommand.commandName, subscribeCommand.commandAction)
             }
         }.build())
     }

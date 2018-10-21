@@ -63,6 +63,12 @@ dependencies {
     // yaml
     implementation 'org.yaml:snakeyaml:1.21'
 
+    // exposed
+    implementation 'org.jetbrains.exposed:exposed:0.10.5'
+
+    // sqlite
+    implementation 'org.xerial:sqlite-jdbc:3.8.11.2'
+
     // Hamcrest
     testImplementation 'com.natpryce:hamkrest:1.4.2.0'
 

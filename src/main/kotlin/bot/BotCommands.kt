@@ -1,6 +1,7 @@
 package bot
 
 import domain.GetGoneForeverTShirts
+import domain.Subscribe
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.entities.Update
 
@@ -20,7 +21,8 @@ class HelloWorldCommand : BotCommand("helloworld",
             }
         })
 
-class StartCommand : BotCommand("start",
+class StartCommand : BotCommand(
+        "start",
         object : CommandAction {
             override fun invoke(bot: Bot, update: Update, args: List<String>) {
                 update.message?.let {
@@ -34,7 +36,8 @@ class StartCommand : BotCommand("start",
 
 class GoneForeverTShirtsCommand(
         private val getGoneForeverTShirts: GetGoneForeverTShirts
-) : BotCommand("goneforever",
+) : BotCommand(
+        "goneforever",
         object : CommandAction {
             override fun invoke(bot: Bot, update: Update, args: List<String>) {
                 getGoneForeverTShirts.invoke()
@@ -53,3 +56,17 @@ class GoneForeverTShirtsCommand(
                         }
             }
         })
+
+class SubscribeCommand(
+        private val subscribe: Subscribe
+) : BotCommand(
+        "subscribe",
+        object : CommandAction {
+            override fun invoke(bot: Bot, update: Update, args: List<String>) {
+                update.message?.let {
+                    subscribe(it.chat.id, it.chat.username?: "unknown")
+                }
+
+            }
+        }
+)
