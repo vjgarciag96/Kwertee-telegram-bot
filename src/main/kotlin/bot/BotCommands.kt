@@ -20,6 +20,18 @@ class HelloWorldCommand : BotCommand("helloworld",
             }
         })
 
+class StartCommand : BotCommand("start",
+        object : CommandAction {
+            override fun invoke(bot: Bot, update: Update, args: List<String>) {
+                update.message?.let {
+                    bot.sendMessage(it.chat.id,
+                            "Welcome to Qweerte t-shirts bot. In this bot you will see offers from https://www.qwertee.com/. For more info about the features of this bot, run the /help command")
+                }
+            }
+
+        }
+)
+
 class GoneForeverTShirtsCommand(
         private val getGoneForeverTShirts: GetGoneForeverTShirts
 ) : BotCommand("goneforever",
