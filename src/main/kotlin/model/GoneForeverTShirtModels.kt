@@ -1,6 +1,6 @@
 package model
 
-data class GoneForeverTShirtDTO(
+data class TShirtDTO(
     val eurPrice: String,
     val usdPrice: String,
     val gbpPrice: String,
@@ -8,4 +8,4 @@ data class GoneForeverTShirtDTO(
     val imageUrl: String
 )
 
-typealias GoneForeverTShirt = GoneForeverTShirtDTO
+typealias TShirt = TShirtDTO

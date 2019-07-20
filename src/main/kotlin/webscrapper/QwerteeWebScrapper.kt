@@ -1,22 +1,22 @@
 package webscrapper
 
 import io.reactivex.Observable
+import model.TShirtDTO
 import org.jsoup.Connection
-import model.GoneForeverTShirtDTO
 
 class QwerteeWebScrapper(
     private val rxWebScrapper: RxWebScrapper,
     private val connection: Connection
 ) {
 
-    fun getGoneForeverTShirts(): Observable<List<GoneForeverTShirtDTO>> {
+    fun getGoneForeverTShirts(): Observable<List<TShirtDTO>> {
         return rxWebScrapper.connect(connection).map {
             val html = it.parse()
             val tShirtsDivs = html.select("div.index-tee")
 
-            val tShirts = arrayListOf<GoneForeverTShirtDTO>()
+            val tShirts = arrayListOf<TShirtDTO>()
             tShirtsDivs.forEach {
-                tShirts.add(GoneForeverTShirtDTO(
+                tShirts.add(TShirtDTO(
                         it.attr("data-tee-price-eur"),
                         it.attr("data-tee-price-usd"),
                         it.attr("data-tee-price-gbp"),

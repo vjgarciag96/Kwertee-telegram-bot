@@ -5,7 +5,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
-import model.GoneForeverTShirt
+import model.TShirt
 import model.GoneForeverTShirtDTOToGoneForeverTShirtMapper
 import org.junit.Test
 import webscrapper.QwerteeWebScrapper
@@ -41,7 +41,7 @@ class GetGoneForeverTShirtsTest {
     }
 
     private fun whenGetGoneForeverTShirtsIsInvoked() {
-        val testSubscriber = TestObserver<List<GoneForeverTShirt>>()
+        val testSubscriber = TestObserver<List<TShirt>>()
         val tShirtsObservable = getGoneForeverTShirts.invoke()
 
         tShirtsObservable.subscribe(testSubscriber)

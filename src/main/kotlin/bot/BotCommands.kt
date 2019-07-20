@@ -2,6 +2,7 @@ package bot
 
 import domain.GetGoneForeverTShirts
 import domain.Subscribe
+import domain.toTextMessage
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.entities.Update
 
@@ -42,15 +43,13 @@ class GoneForeverTShirtsCommand(
         override fun invoke(bot: Bot, update: Update, args: List<String>) {
             getGoneForeverTShirts.invoke()
                 .subscribe {
-                    it.forEach {
-                        val tShirt = it
-                        update.message?.let {
+                    it.forEach { tShirt ->
+                        update.message?.let { message ->
                             bot.sendPhoto(
-                                it.chat.id,
+                                message.chat.id,
                                 tShirt.imageUrl,
-                                caption = tShirt.title
-                                    .plus("\n")
-                                    .plus("Price:${tShirt.eurPrice}|${tShirt.usdPrice}|${tShirt.gbpPrice}"))
+                                caption = tShirt.toTextMessage()
+                            )
                         }
                     }
                 }

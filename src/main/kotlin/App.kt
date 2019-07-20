@@ -1,9 +1,12 @@
+
 import BotTokenProperty.BOT_TOKEN
 import BotTokenProperty.QWERTEE_URL
 import bot.*
 import data.SubscriptionsLocalDataSource
 import data.SubscriptionsRepository
 import domain.GetGoneForeverTShirts
+import domain.GetSubscriptions
+import domain.PublishGoneForeverTShirts
 import domain.Subscribe
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.dispatcher.command
@@ -33,6 +36,10 @@ val myBotModule = module {
     // use cases
     factory { GetGoneForeverTShirts(get(), get()) }
     factory { Subscribe(get()) }
+    factory { GetSubscriptions(get()) }
+    factory { PublishGoneForeverTShirts(get()) }
+    factory { FetchGoneForeverTShirtsTask(get(), get(), get()) }
+    factory { FetchGoneForeverTShirts(get()) }
 
     // data
     single { SubscriptionsRepository(get()) }
@@ -66,8 +73,10 @@ val myBotModule = module {
 class BotApplication : KoinComponent {
 
     private val bot by inject<MyBot>()
+    private val fetchGoneForeverTShirts by inject<FetchGoneForeverTShirts>()
 
     init {
+        fetchGoneForeverTShirts()
         bot.runWithPolling()
     }
 }
@@ -78,4 +87,5 @@ fun main(args: Array<String>) {
         modules(myBotModule)
     }
     BotApplication()
+
 }
