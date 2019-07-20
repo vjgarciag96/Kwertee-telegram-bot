@@ -48,8 +48,8 @@ dependencies {
     implementation 'io.github.seik.kotlin-telegram-bot:telegram:0.3.2'
 
     // Koin
-    implementation "org.koin:koin-core:0.9.3"
-    testImplementation "org.koin:koin-test:0.9.3"
+    implementation "org.koin:koin-core:2.0.1"
+    testImplementation "org.koin:koin-test:2.0.1"
 
     // JSoup
     implementation 'org.jsoup:jsoup:1.11.3'
@@ -64,10 +64,7 @@ dependencies {
     implementation 'org.yaml:snakeyaml:1.21'
 
     // exposed
-    implementation 'org.jetbrains.exposed:exposed:0.10.5'
-
-    // sqlite
-    implementation 'org.xerial:sqlite-jdbc:3.8.11.2'
+    implementation "com.squareup.sqldelight:sqlite-driver:1.1.4"
 
     // Hamcrest
     testImplementation 'com.natpryce:hamkrest:1.4.2.0'

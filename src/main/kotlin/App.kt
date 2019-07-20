@@ -1,20 +1,20 @@
 import BotTokenProperty.BOT_TOKEN
 import BotTokenProperty.QWERTEE_URL
 import bot.*
-import data.LocalSubscriptionsDataSource
+import data.SubscriptionsLocalDataSource
 import data.SubscriptionsRepository
 import domain.GetGoneForeverTShirts
 import domain.Subscribe
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.dispatcher.command
+import model.GoneForeverTShirtDTOToGoneForeverTShirtMapper
 import org.jsoup.Connection
 import org.jsoup.Jsoup
-import org.koin.dsl.module.applicationContext
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.StandAloneContext.startKoin
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.context.startKoin
+import org.koin.core.inject
+import org.koin.dsl.module
 import webscrapper.QwerteeWebScrapper
-import model.GoneForeverTShirtDTOToGoneForeverTShirtMapper
 import webscrapper.RxJsoupWebScrapper
 import webscrapper.RxWebScrapper
 
@@ -23,33 +23,30 @@ object BotTokenProperty {
     const val QWERTEE_URL = "qwertee-url-property"
 }
 
-val myBotModule = applicationContext {
+val myBotModule = module {
     // commands
-    bean { HelloWorldCommand() }
-    bean { StartCommand() }
-    bean { GoneForeverTShirtsCommand(get()) }
-    bean { SubscribeCommand(get()) }
+    factory { HelloWorldCommand() }
+    factory { StartCommand() }
+    factory { GoneForeverTShirtsCommand(get()) }
+    factory { SubscribeCommand(get()) }
 
     // use cases
-    bean { GetGoneForeverTShirts(get(), get()) }
-    bean { Subscribe(get()) }
+    factory { GetGoneForeverTShirts(get(), get()) }
+    factory { Subscribe(get()) }
 
     // data
-    bean { SubscriptionsRepository(get()) }
-    bean { LocalSubscriptionsDataSource() }
+    single { SubscriptionsRepository(get()) }
+    factory { SubscriptionsLocalDataSource() }
 
     // mapper
-    bean { GoneForeverTShirtDTOToGoneForeverTShirtMapper() }
+    factory { GoneForeverTShirtDTOToGoneForeverTShirtMapper() }
 
     // web scrapper
-    bean { RxJsoupWebScrapper() as RxWebScrapper }
-    bean {
-        QwerteeWebScrapper(get(), Jsoup.connect(getProperty(QWERTEE_URL))
-                .method(Connection.Method.GET))
-    }
+    factory { RxJsoupWebScrapper() as RxWebScrapper }
+    factory { QwerteeWebScrapper(get(), Jsoup.connect(getProperty(QWERTEE_URL)).method(Connection.Method.GET)) }
 
     // bot
-    bean {
+    single {
         MyBot(Bot.Builder().apply {
             this.token = getProperty(BOT_TOKEN)
             this.updater.dispatcher.apply {
@@ -76,8 +73,9 @@ class BotApplication : KoinComponent {
 }
 
 fun main(args: Array<String>) {
-    startKoin(listOf(myBotModule), extraProperties = mapOf(
-            BOT_TOKEN to Config.BOT_TOKEN,
-            QWERTEE_URL to "https://www.qwertee.com"))
+    startKoin {
+        fileProperties()
+        modules(myBotModule)
+    }
     BotApplication()
 }

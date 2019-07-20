@@ -3,10 +3,10 @@ package data
 import model.Subscription
 
 class SubscriptionsRepository(
-        private val localDataSource: LocalSubscriptionsDataSource
+    private val subscriptionsLocalDataSource: SubscriptionsLocalDataSource
 ) {
 
-    fun save(subscription: Subscription) {
-        localDataSource.save(subscription)
+    fun put(subscription: Subscription) {
+        subscriptionsLocalDataSource.put(subscription)
     }
 }

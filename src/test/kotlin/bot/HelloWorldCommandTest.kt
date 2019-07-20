@@ -10,9 +10,9 @@ import me.ivmg.telegram.entities.Update
 import myBotModule
 import org.junit.Before
 import org.junit.Test
-import org.koin.standalone.StandAloneContext.startKoin
-import org.koin.standalone.inject
+import org.koin.core.context.startKoin
 import org.koin.test.AutoCloseKoinTest
+import org.koin.test.inject
 
 class HelloWorldCommandTest : AutoCloseKoinTest() {
 
@@ -25,7 +25,9 @@ class HelloWorldCommandTest : AutoCloseKoinTest() {
 
     @Before
     fun before() {
-        startKoin(listOf(myBotModule))
+        startKoin {
+            listOf(myBotModule)
+        }
     }
 
     @Test
@@ -80,32 +82,32 @@ class HelloWorldCommandTest : AutoCloseKoinTest() {
         parameter due to the way mockito is generating the mock.
         More info at: https://github.com/nhaarman/mockito-kotlin/issues/174 */
         verify(bot).sendMessage(eq(ANY_CHAT_ID),
-                any(),
-                anyOrNull(),
-                anyOrNull(),
-                anyOrNull(),
-                anyOrNull(),
-                anyOrNull())
+            any(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull())
     }
 
     private fun thenAMessageIsSentWithAppropiateContent() {
         verify(bot).sendMessage(any(),
-                eq("Hello World!!"),
-                anyOrNull(),
-                anyOrNull(),
-                anyOrNull(),
-                anyOrNull(),
-                anyOrNull())
+            eq("Hello World!!"),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull())
     }
 
     private fun thenTheCommandDoesntSendAMessage() {
         verify(bot, never()).sendMessage(any(),
-                any(),
-                anyOrNull(),
-                anyOrNull(),
-                anyOrNull(),
-                anyOrNull(),
-                anyOrNull())
+            any(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull())
     }
 
     companion object {

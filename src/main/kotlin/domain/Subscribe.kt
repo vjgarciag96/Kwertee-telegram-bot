@@ -3,8 +3,11 @@ package domain
 import data.SubscriptionsRepository
 import model.Subscription
 
-class Subscribe(private val repository: SubscriptionsRepository) {
+class Subscribe(
+    private val subscriptionsRepository: SubscriptionsRepository
+) {
+
     operator fun invoke(userId: Long, username: String) {
-        repository.save(Subscription(userId, username))
+        subscriptionsRepository.put(Subscription(userId, username))
     }
 }
