@@ -1,7 +1,6 @@
 package domain
 
 import data.SubscriptionsRepository
-import model.Subscription
 
 class Subscribe(private val subscriptionsRepository: SubscriptionsRepository) {
 

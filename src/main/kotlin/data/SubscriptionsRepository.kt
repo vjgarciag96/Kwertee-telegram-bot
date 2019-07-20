@@ -1,6 +1,6 @@
 package data
 
-import model.Subscription
+import domain.Subscription
 
 class SubscriptionsRepository(
     private val subscriptionsLocalDataSource: SubscriptionsLocalDataSource

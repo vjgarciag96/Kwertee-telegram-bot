@@ -1,7 +1,7 @@
-package webscrapper
+package data.webscrapper
 
+import data.TShirtDTO
 import io.reactivex.Observable
-import model.TShirtDTO
 import org.jsoup.Connection
 
 class QwerteeWebScrapper(

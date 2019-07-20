@@ -1,15 +1,15 @@
 package domain
 
+import data.TShirtDTO
+import data.toDomainModel
 import io.reactivex.Observable
-import model.GoneForeverTShirtDTOToGoneForeverTShirtMapper
-import model.TShirt
-import webscrapper.QwerteeWebScrapper
+import mapList
+import data.webscrapper.QwerteeWebScrapper
 
 class GetGoneForeverTShirts(
-    private val webScrapper: QwerteeWebScrapper,
-    private val mapper: GoneForeverTShirtDTOToGoneForeverTShirtMapper
+    private val webScrapper: QwerteeWebScrapper
 ) {
 
     operator fun invoke(): Observable<List<TShirt>> =
-            webScrapper.getGoneForeverTShirts().map { mapper.map(it) }
+        webScrapper.getGoneForeverTShirts().mapList(TShirtDTO::toDomainModel)
 }

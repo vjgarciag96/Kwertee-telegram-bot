@@ -1,21 +1,19 @@
 package domain
 
+import GoneForeverTShirtDTOProvider
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
-import model.TShirt
-import model.GoneForeverTShirtDTOToGoneForeverTShirtMapper
 import org.junit.Test
-import webscrapper.QwerteeWebScrapper
+import data.webscrapper.QwerteeWebScrapper
 
 class GetGoneForeverTShirtsTest {
 
     private val webScrapper: QwerteeWebScrapper = mock()
-    private val mapper: GoneForeverTShirtDTOToGoneForeverTShirtMapper = mock()
 
-    private val getGoneForeverTShirts = GetGoneForeverTShirts(webScrapper, mapper)
+    private val getGoneForeverTShirts = GetGoneForeverTShirts(webScrapper)
 
     @Test
     fun `Should use web scrapper for getting gone forever t-shirts when is invoked`() {
@@ -31,13 +29,11 @@ class GetGoneForeverTShirtsTest {
         givenAMockedWebScrapper()
 
         whenGetGoneForeverTShirtsIsInvoked()
-
-        thenResultIsMapped()
     }
 
     private fun givenAMockedWebScrapper() {
         whenever(webScrapper.getGoneForeverTShirts())
-                .thenReturn(Observable.just(GoneForeverTShirtDTOProvider.testTShirtSet1()))
+            .thenReturn(Observable.just(GoneForeverTShirtDTOProvider.testTShirtSet1()))
     }
 
     private fun whenGetGoneForeverTShirtsIsInvoked() {
@@ -49,9 +45,5 @@ class GetGoneForeverTShirtsTest {
 
     private fun thenWebScrapperIsCalledForGettingTShirtsInfo() {
         verify(webScrapper).getGoneForeverTShirts()
-    }
-
-    private fun thenResultIsMapped() {
-        verify(mapper).map(GoneForeverTShirtDTOProvider.testTShirtSet1())
     }
 }

@@ -1,7 +1,6 @@
 package domain
 
 import bot.MyBot
-import model.TShirt
 
 class PublishGoneForeverTShirts(private val bot: MyBot) {
 

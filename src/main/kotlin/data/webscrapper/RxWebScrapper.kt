@@ -1,4 +1,4 @@
-package webscrapper
+package data.webscrapper
 
 import com.github.florent37.rxjsoup.RxJsoup
 import io.reactivex.Observable

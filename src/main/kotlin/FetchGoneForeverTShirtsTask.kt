@@ -4,7 +4,7 @@ import domain.PublishGoneForeverTShirts
 import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
-import model.TShirt
+import domain.TShirt
 import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger

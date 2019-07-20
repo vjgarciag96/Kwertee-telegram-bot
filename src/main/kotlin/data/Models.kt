@@ -1,4 +1,4 @@
-package model
+package data
 
 data class TShirtDTO(
     val eurPrice: String,
@@ -7,5 +7,3 @@ data class TShirtDTO(
     val title: String,
     val imageUrl: String
 )
-
-typealias TShirt = TShirtDTO

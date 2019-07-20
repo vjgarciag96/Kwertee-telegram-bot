@@ -5,8 +5,7 @@ class FetchGoneForeverTShirts(
 ) {
 
     operator fun invoke() {
-        val timer = Timer()
-        timer.scheduleAtFixedRate(
+        Timer().scheduleAtFixedRate(
             fetchGoneForeverTShirtsTask,
             0,
             10000
