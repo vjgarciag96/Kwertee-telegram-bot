@@ -3,27 +3,15 @@ package bot
 import domain.GetGoneForeverTShirts
 import domain.Subscribe
 import domain.toTextMessage
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.entities.Update
 
 interface BotCommand {
     val name: String
     fun action(bot: Bot, update: Update, args: List<String>)
-}
-
-class HelloWorldCommand : BotCommand {
-    override val name: String
-        get() = "helloworld"
-
-    override fun action(bot: Bot, update: Update, args: List<String>) {
-        update.message?.let {
-            bot.sendMessage(it.chat.id, "Hello World!!")
-        }
-    }
 }
 
 class StartCommand : BotCommand {
@@ -47,13 +35,11 @@ class GoneForeverTShirtsCommand(
         get() = "goneforever"
 
     override fun action(bot: Bot, update: Update, args: List<String>) {
-        GlobalScope.launch {
-            withContext(Dispatchers.IO) {
-                val tShirts = getGoneForeverTShirts()
-                tShirts.forEach { tShirt ->
-                    update.message?.let { message ->
-                        bot.sendPhoto(message.chat.id, tShirt.imageUrl, tShirt.toTextMessage())
-                    }
+        CoroutineScope(Dispatchers.IO).launch {
+            val tShirts = getGoneForeverTShirts()
+            tShirts.forEach { tShirt ->
+                update.message?.let { message ->
+                    bot.sendPhoto(message.chat.id, tShirt.imageUrl, tShirt.toTextMessage())
                 }
             }
         }

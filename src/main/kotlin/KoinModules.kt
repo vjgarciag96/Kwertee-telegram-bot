@@ -1,15 +1,15 @@
 import BotTokenProperty.BOT_TOKEN
 import BotTokenProperty.QWERTEE_URL
-import bot.*
-import data.SubscriptionsRepository
-import data.TShirtRepository
+import bot.GoneForeverTShirtsCommand
+import bot.MyBot
+import bot.StartCommand
+import bot.SubscribeCommand
 import data.local.SubscriptionsLocalDataSource
 import data.remote.QwerteeWebScrapper
 import data.remote.WebScrapper
-import domain.GetGoneForeverTShirts
-import domain.GetSubscriptions
-import domain.PublishGoneForeverTShirts
-import domain.Subscribe
+import data.repository.SubscriptionsRepository
+import data.repository.TShirtRepository
+import domain.*
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.dispatcher.command
 import org.jsoup.Connection
@@ -23,12 +23,13 @@ object BotTokenProperty {
 
 val myBotModule = module {
     // commands
-    factory { HelloWorldCommand() }
     factory { StartCommand() }
     factory { GoneForeverTShirtsCommand(get()) }
     factory { SubscribeCommand(get()) }
 
     // use cases
+    factory { SendPhotoMessage(get()) }
+    factory { SendTextMessage(get()) }
     factory { GetGoneForeverTShirts(get()) }
     factory { Subscribe(get()) }
     factory { GetSubscriptions(get()) }
@@ -50,11 +51,9 @@ val myBotModule = module {
         MyBot(Bot.Builder().apply {
             this.token = getProperty(BOT_TOKEN)
             this.updater.dispatcher.apply {
-                val helloWorldCommand: HelloWorldCommand = get()
                 val startCommand: StartCommand = get()
                 val goneForeverTShirtsCommand: GoneForeverTShirtsCommand = get()
                 val subscribeCommand: SubscribeCommand = get()
-                command(helloWorldCommand.name, helloWorldCommand::action)
                 command(startCommand.name, startCommand::action)
                 command(goneForeverTShirtsCommand.name, goneForeverTShirtsCommand::action)
                 command(subscribeCommand.name, subscribeCommand::action)

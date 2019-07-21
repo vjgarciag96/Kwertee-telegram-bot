@@ -1,6 +1,5 @@
-package data
+package data.remote
 
-import data.remote.TShirtDTO
 import domain.TShirt
 
 fun TShirtDTO.toDomainModel(): TShirt = TShirt(

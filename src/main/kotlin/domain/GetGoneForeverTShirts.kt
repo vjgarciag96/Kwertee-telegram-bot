@@ -1,6 +1,6 @@
 package domain
 
-import data.TShirtRepository
+import data.repository.TShirtRepository
 
 class GetGoneForeverTShirts(private val tShirtRepository: TShirtRepository) {
 

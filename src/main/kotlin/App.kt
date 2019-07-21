@@ -3,12 +3,12 @@ import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.inject
 
-class BotApplication : KoinComponent {
+object BotApplication : KoinComponent {
 
     private val bot by inject<MyBot>()
     private val fetchGoneForeverTShirts by inject<FetchGoneForeverTShirts>()
 
-    init {
+    fun run() {
         fetchGoneForeverTShirts()
         bot.runWithPolling()
     }
@@ -19,6 +19,6 @@ fun main() {
         fileProperties()
         modules(myBotModule)
     }
-    BotApplication()
 
+    BotApplication.run()
 }

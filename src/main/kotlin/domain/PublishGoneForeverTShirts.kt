@@ -1,12 +1,10 @@
 package domain
 
-import bot.MyBot
-
-class PublishGoneForeverTShirts(private val bot: MyBot) {
+class PublishGoneForeverTShirts(private val sendPhotoMessage: SendPhotoMessage) {
 
     operator fun invoke(tShirts: List<TShirt>, chatId: Long) {
         tShirts.forEach { tShirt ->
-            bot.sendPhoto(chatId, tShirt.imageUrl, tShirt.toTextMessage())
+            sendPhotoMessage(chatId, tShirt.imageUrl, tShirt.toTextMessage())
         }
     }
 }

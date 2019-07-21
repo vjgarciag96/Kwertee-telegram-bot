@@ -1,10 +1,8 @@
 package domain
 
-import data.SubscriptionsRepository
+import data.repository.SubscriptionsRepository
 
-class GetSubscriptions(
-    private val subscriptionsRepository: SubscriptionsRepository
-) {
+class GetSubscriptions(private val subscriptionsRepository: SubscriptionsRepository) {
 
     operator fun invoke(): List<Subscription> = subscriptionsRepository.fetchAll()
 }

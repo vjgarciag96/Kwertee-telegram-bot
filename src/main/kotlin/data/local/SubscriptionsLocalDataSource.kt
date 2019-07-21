@@ -4,11 +4,11 @@ import domain.Subscription
 
 class SubscriptionsLocalDataSource {
 
-    private val inMemoryStorage = mutableListOf<Subscription>()
+    private val inMemoryStorage = mutableListOf<SubscriptionDO>()
 
-    fun fetchAll(): List<Subscription> = inMemoryStorage
+    fun fetchAll(): List<SubscriptionDO> = inMemoryStorage
 
-    fun put(subscription: Subscription) {
+    fun put(subscription: SubscriptionDO) {
         inMemoryStorage.add(subscription)
     }
 }
