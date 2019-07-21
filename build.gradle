@@ -17,6 +17,11 @@ configurations {
     ktlint
 }
 
+task runApp(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'AppKt'
+}
+
 task detekt(type: JavaExec, group: "verification") {
     main = "io.gitlab.arturbosch.detekt.cli.Main"
     classpath = configurations.detekt
