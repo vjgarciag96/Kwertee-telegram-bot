@@ -1,12 +1,27 @@
 package data.local
 
+import data.local.exposed.SubscriptionTable
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
+
 class SubscriptionsLocalDataSource {
 
-    private val inMemoryStorage = mutableListOf<SubscriptionDO>()
-
-    fun fetchAll(): List<SubscriptionDO> = inMemoryStorage
+    fun fetchAll(): List<SubscriptionDO> = transaction {
+        SubscriptionTable.selectAll().map {
+            SubscriptionDO(
+                it[SubscriptionTable.userId],
+                it[SubscriptionTable.username]
+            )
+        }
+    }
 
     fun put(subscription: SubscriptionDO) {
-        inMemoryStorage.add(subscription)
+        transaction {
+            SubscriptionTable.insert {
+                it[userId] = subscription.userId
+                it[username] = subscription.username
+            }
+        }
     }
 }

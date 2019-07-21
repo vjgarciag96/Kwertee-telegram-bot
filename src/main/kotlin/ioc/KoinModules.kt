@@ -1,26 +1,21 @@
 package ioc
 
-import domain.FetchGoneForeverTShirts
-import domain.FetchGoneForeverTShirtsTask
-import ioc.BotTokenProperty.BOT_TOKEN
-import ioc.BotTokenProperty.QWERTEE_URL
 import bot.GoneForeverTShirtsCommand
 import bot.MyBot
 import bot.StartCommand
 import bot.SubscribeCommand
 import data.local.SubscriptionsLocalDataSource
+import data.local.exposed.SetUpDatabase
 import data.remote.QwerteeWebScrapper
 import data.remote.WebScrapper
 import data.repository.SubscriptionsRepository
 import data.repository.TShirtRepository
-import domain.GetGoneForeverTShirts
-import domain.SendPhotoMessage
-import domain.SendTextMessage
-import domain.Subscribe
-import domain.GetSubscriptions
-import domain.PublishGoneForeverTShirts
+import domain.*
+import ioc.BotTokenProperty.BOT_TOKEN
+import ioc.BotTokenProperty.QWERTEE_URL
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.dispatcher.command
+import org.jetbrains.exposed.sql.Database
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.koin.dsl.module
@@ -48,8 +43,13 @@ val myBotModule = module {
 
     // data
     single { SubscriptionsRepository(get()) }
+    single {
+        // Provides SQLite in file DB
+        Database.connect("jdbc:sqlite:src/main/resources/qwertee.db", "org.sqlite.JDBC")
+    }
     factory { SubscriptionsLocalDataSource() }
     single { TShirtRepository(get()) }
+    factory { SetUpDatabase(get()) }
 
     // web scrapper
     factory { WebScrapper() }
