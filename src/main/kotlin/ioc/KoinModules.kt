@@ -1,5 +1,9 @@
-import BotTokenProperty.BOT_TOKEN
-import BotTokenProperty.QWERTEE_URL
+package ioc
+
+import domain.FetchGoneForeverTShirts
+import domain.FetchGoneForeverTShirtsTask
+import ioc.BotTokenProperty.BOT_TOKEN
+import ioc.BotTokenProperty.QWERTEE_URL
 import bot.GoneForeverTShirtsCommand
 import bot.MyBot
 import bot.StartCommand
@@ -9,7 +13,12 @@ import data.remote.QwerteeWebScrapper
 import data.remote.WebScrapper
 import data.repository.SubscriptionsRepository
 import data.repository.TShirtRepository
-import domain.*
+import domain.GetGoneForeverTShirts
+import domain.SendPhotoMessage
+import domain.SendTextMessage
+import domain.Subscribe
+import domain.GetSubscriptions
+import domain.PublishGoneForeverTShirts
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.dispatcher.command
 import org.jsoup.Connection

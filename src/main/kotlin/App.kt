@@ -1,20 +1,8 @@
-import bot.MyBot
-import org.koin.core.KoinComponent
+import bot.BotApplication
+import ioc.myBotModule
 import org.koin.core.context.startKoin
-import org.koin.core.inject
 
-object BotApplication : KoinComponent {
-
-    private val bot by inject<MyBot>()
-    private val fetchGoneForeverTShirts by inject<FetchGoneForeverTShirts>()
-
-    fun run() {
-        fetchGoneForeverTShirts()
-        bot.runWithPolling()
-    }
-}
-
-fun main() {
+fun main(args: Array<String>) {
     startKoin {
         fileProperties()
         modules(myBotModule)

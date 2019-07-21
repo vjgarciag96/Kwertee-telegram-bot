@@ -1,10 +1,9 @@
-import domain.GetGoneForeverTShirts
-import domain.GetSubscriptions
-import domain.PublishGoneForeverTShirts
+package domain
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.TimerTask
 import java.util.logging.Level
 import java.util.logging.Logger
 

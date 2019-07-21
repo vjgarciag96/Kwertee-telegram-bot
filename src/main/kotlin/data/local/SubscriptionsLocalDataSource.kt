@@ -1,7 +1,5 @@
 package data.local
 
-import domain.Subscription
-
 class SubscriptionsLocalDataSource {
 
     private val inMemoryStorage = mutableListOf<SubscriptionDO>()

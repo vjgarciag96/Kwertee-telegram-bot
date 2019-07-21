@@ -58,5 +58,4 @@ class SubscribeCommand(
             subscribe(it.chat.id, it.chat.username ?: "unknown")
         }
     }
-
 }

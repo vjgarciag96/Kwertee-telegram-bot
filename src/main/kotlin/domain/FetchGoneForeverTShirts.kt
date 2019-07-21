@@ -1,4 +1,6 @@
-import java.util.*
+package domain
+
+import java.util.Timer
 
 class FetchGoneForeverTShirts(
     private val fetchGoneForeverTShirtsTask: FetchGoneForeverTShirtsTask
