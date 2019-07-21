@@ -54,10 +54,10 @@ val myBotModule = module {
                 val startCommand: StartCommand = get()
                 val goneForeverTShirtsCommand: GoneForeverTShirtsCommand = get()
                 val subscribeCommand: SubscribeCommand = get()
-                command(helloWorldCommand.commandName, helloWorldCommand.commandAction)
-                command(startCommand.commandName, startCommand.commandAction)
-                command(goneForeverTShirtsCommand.commandName, goneForeverTShirtsCommand.commandAction)
-                command(subscribeCommand.commandName, subscribeCommand.commandAction)
+                command(helloWorldCommand.name, helloWorldCommand::action)
+                command(startCommand.name, startCommand::action)
+                command(goneForeverTShirtsCommand.name, goneForeverTShirtsCommand::action)
+                command(subscribeCommand.name, subscribeCommand::action)
             }
         }.build())
     }

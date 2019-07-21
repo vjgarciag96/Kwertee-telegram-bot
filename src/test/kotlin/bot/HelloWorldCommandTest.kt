@@ -32,7 +32,7 @@ class HelloWorldCommandTest : AutoCloseKoinTest() {
 
     @Test
     fun `Should have helloWorld as command name`() {
-        assertThat(helloWorldCommand.commandName, equalTo("helloworld"))
+        assertThat(helloWorldCommand.name, equalTo("helloworld"))
     }
 
     @Test
@@ -72,7 +72,7 @@ class HelloWorldCommandTest : AutoCloseKoinTest() {
     }
 
     private fun whenHelloWorldCommandIsInvoked() {
-        helloWorldCommand.commandAction.invoke(bot, update, emptyList())
+        helloWorldCommand.action(bot, update, emptyList())
     }
 
     private fun thenAMessageIsSentToTheChatWhichInvokedTheCommand() {

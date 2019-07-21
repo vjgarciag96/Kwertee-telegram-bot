@@ -10,65 +10,67 @@ import kotlinx.coroutines.withContext
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.entities.Update
 
-typealias CommandAction = (Bot, Update, List<String>) -> Unit
+interface BotCommand {
+    val name: String
+    fun action(bot: Bot, update: Update, args: List<String>)
+}
 
-abstract class BotCommand(
-        val commandName: String = "default",
-        val commandAction: CommandAction
-)
+class HelloWorldCommand : BotCommand {
+    override val name: String
+        get() = "helloworld"
 
-class HelloWorldCommand : BotCommand("helloworld",
-        object : CommandAction {
-            override fun invoke(bot: Bot, update: Update, args: List<String>) {
-                update.message?.let {
-                    bot.sendMessage(it.chat.id, "Hello World!!")
-                }
-            }
-        })
-
-class StartCommand : BotCommand(
-        "start",
-        object : CommandAction {
-            override fun invoke(bot: Bot, update: Update, args: List<String>) {
-                update.message?.let {
-                    bot.sendMessage(it.chat.id,
-                            "Welcome to Qweerte t-shirts bot. In this bot you will see offers from https://www.qwertee.com/. For more info about the features of this bot, run the /help command")
-                }
-            }
-
+    override fun action(bot: Bot, update: Update, args: List<String>) {
+        update.message?.let {
+            bot.sendMessage(it.chat.id, "Hello World!!")
         }
-)
+    }
+}
+
+class StartCommand : BotCommand {
+    override val name: String
+        get() = "start"
+
+    override fun action(bot: Bot, update: Update, args: List<String>) {
+        update.message?.let {
+            bot.sendMessage(
+                it.chat.id,
+                "Welcome to Qweerte t-shirts bot. In this bot you will see offers from https://www.qwertee.com/. For more info about the features of this bot, run the /help command")
+        }
+    }
+}
 
 class GoneForeverTShirtsCommand(
-        private val getGoneForeverTShirts: GetGoneForeverTShirts
-) : BotCommand(
-        "goneforever",
-        object : CommandAction {
-            override fun invoke(bot: Bot, update: Update, args: List<String>) {
-                GlobalScope.launch {
-                    withContext(Dispatchers.IO) {
-                        val tShirts = getGoneForeverTShirts()
-                        tShirts.forEach { tShirt ->
-                            update.message?.let { message ->
-                                bot.sendPhoto(message.chat.id, tShirt.imageUrl, tShirt.toTextMessage()
-                                )
-                            }
-                        }
+    private val getGoneForeverTShirts: GetGoneForeverTShirts
+) : BotCommand {
+
+    override val name: String
+        get() = "goneforever"
+
+    override fun action(bot: Bot, update: Update, args: List<String>) {
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                val tShirts = getGoneForeverTShirts()
+                tShirts.forEach { tShirt ->
+                    update.message?.let { message ->
+                        bot.sendPhoto(message.chat.id, tShirt.imageUrl, tShirt.toTextMessage())
                     }
                 }
             }
-        })
+        }
+    }
+}
 
 class SubscribeCommand(
-        private val subscribe: Subscribe
-) : BotCommand(
-        "subscribe",
-        object : CommandAction {
-            override fun invoke(bot: Bot, update: Update, args: List<String>) {
-                update.message?.let {
-                    subscribe(it.chat.id, it.chat.username ?: "unknown")
-                }
+    private val subscribe: Subscribe
+) : BotCommand {
 
-            }
+    override val name: String
+        get() = "subscribe"
+
+    override fun action(bot: Bot, update: Update, args: List<String>) {
+        update.message?.let {
+            subscribe(it.chat.id, it.chat.username ?: "unknown")
         }
-)
+    }
+
+}
