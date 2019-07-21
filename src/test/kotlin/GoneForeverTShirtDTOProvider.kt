@@ -1,4 +1,4 @@
-import model.TShirtDTO
+import data.remote.TShirtDTO
 import java.util.*
 
 class GoneForeverTShirtDTOProvider {

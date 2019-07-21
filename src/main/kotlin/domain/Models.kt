@@ -1,5 +1,5 @@
 package domain
 
-import data.TShirtDTO
+import data.remote.TShirtDTO
 
 typealias TShirt = TShirtDTO

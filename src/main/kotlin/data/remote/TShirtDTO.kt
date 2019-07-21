@@ -1,4 +1,4 @@
-package data
+package data.remote
 
 data class TShirtDTO(
     val eurPrice: String,

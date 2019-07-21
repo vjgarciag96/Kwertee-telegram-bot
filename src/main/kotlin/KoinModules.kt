@@ -1,12 +1,11 @@
-
 import BotTokenProperty.BOT_TOKEN
 import BotTokenProperty.QWERTEE_URL
 import bot.*
-import data.SubscriptionsLocalDataSource
 import data.SubscriptionsRepository
-import data.webscrapper.QwerteeWebScrapper
-import data.webscrapper.RxJsoupWebScrapper
-import data.webscrapper.RxWebScrapper
+import data.TShirtRepository
+import data.local.SubscriptionsLocalDataSource
+import data.remote.QwerteeWebScrapper
+import data.remote.WebScrapper
 import domain.GetGoneForeverTShirts
 import domain.GetSubscriptions
 import domain.PublishGoneForeverTShirts
@@ -40,9 +39,10 @@ val myBotModule = module {
     // data
     single { SubscriptionsRepository(get()) }
     factory { SubscriptionsLocalDataSource() }
+    single { TShirtRepository(get()) }
 
     // web scrapper
-    factory { RxJsoupWebScrapper() as RxWebScrapper }
+    factory { WebScrapper() }
     factory { QwerteeWebScrapper(get(), Jsoup.connect(getProperty(QWERTEE_URL)).method(Connection.Method.GET)) }
 
     // bot

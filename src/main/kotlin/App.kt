@@ -14,7 +14,7 @@ class BotApplication : KoinComponent {
     }
 }
 
-fun main(args: Array<String>) {
+fun main() {
     startKoin {
         fileProperties()
         modules(myBotModule)
