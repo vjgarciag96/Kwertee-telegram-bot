@@ -1,1 +1,4 @@
+.idea/*
+.gradle/*
+build/*
 config/bot_config.yml
