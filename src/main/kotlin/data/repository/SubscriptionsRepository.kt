@@ -15,4 +15,8 @@ class SubscriptionsRepository(
     fun put(subscription: Subscription) {
         subscriptionsLocalDataSource.put(subscription.toDiskObject())
     }
+
+    fun remove(userId: Long) {
+        subscriptionsLocalDataSource.remove(userId)
+    }
 }
