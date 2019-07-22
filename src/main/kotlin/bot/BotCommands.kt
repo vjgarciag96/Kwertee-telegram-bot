@@ -72,6 +72,10 @@ class UnsubscribeCommand(
     override fun action(bot: Bot, update: Update, args: List<String>) {
         update.message?.let {
             unsubscribe(it.chat.id)
+            bot.sendMessage(it.chat.id, "You'll stop receiving notifications " +
+                "about last Qwertee's website gone forever t-shirts. If you want to check " +
+                "the current gone forever t-shirts, run /goneforever command. If you want to " +
+                "restart receiving the t-shirt updates again, run the /subscribe command")
         }
     }
 
