@@ -34,8 +34,8 @@ class HelpCommand : BotCommand {
     override fun action(bot: Bot, update: Update, args: List<String>) {
         update.message?.let {
             bot.sendMessage(it.chat.id, "The bot's way of working is really simple. " +
-                "To watch the current available 'gone forever' t-shirts, run the /goneforever command. " +
-                "To receive updates with the new 'gone forever' t-shirts updated every day, run /subscribe. " +
+                "To watch the currently available 'gone forever' t-shirts, run the /goneforever command. " +
+                "To receive updates every day, run /subscribe. " +
                 "Once subscribed, if you want to stop receiving notifications, run the /unsubscribe command. " +
                 "And that's all, have fun!! :)")
         }
@@ -98,7 +98,7 @@ class UnsubscribeCommand(
 
             if (unsubscribeResult) {
                 bot.sendMessage(it.chat.id, "You'll stop receiving notifications " +
-                    "about Qwertee's website 'gone forever' t-shirts. If you want to check " +
+                    "about Qwertee 'gone forever' t-shirts. If you want to check " +
                     "the currently available 'gone forever' t-shirts, run /goneforever command. If you want to " +
                     "restart receiving the t-shirt updates again, run the /subscribe command")
             } else {
