@@ -10,7 +10,7 @@ class FetchGoneForeverTShirts(
         Timer().scheduleAtFixedRate(
             fetchGoneForeverTShirtsTask,
             0,
-            10000
+            24 * 3600 * 1000
         )
     }
 }
