@@ -6,7 +6,6 @@ class Unsubscribe(
     private val subscriptionsRepository: SubscriptionsRepository
 ) {
 
-    operator fun invoke(userId: Long) {
+    operator fun invoke(userId: Long): Boolean =
         subscriptionsRepository.remove(userId)
-    }
 }

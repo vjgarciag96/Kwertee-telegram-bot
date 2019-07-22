@@ -1,36 +1,53 @@
 package data.local
 
 import data.local.exposed.SubscriptionTable
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class SubscriptionsLocalDataSource {
 
     fun fetchAll(): List<SubscriptionDO> = transaction {
-        SubscriptionTable.selectAll().map {
-            SubscriptionDO(
-                it[SubscriptionTable.userId],
-                it[SubscriptionTable.username]
-            )
-        }
+        SubscriptionTable.selectAll().map { it.toSubscriptionDO() }
     }
 
-    fun put(subscription: SubscriptionDO) {
+    fun put(subscription: SubscriptionDO): Boolean =
         transaction {
+            val dbSubscription = SubscriptionTable.select {
+                SubscriptionTable.userId eq subscription.userId
+            }.map { it.toSubscriptionDO() }
+
+            if (dbSubscription.isNotEmpty()) {
+                return@transaction false
+            }
+
             SubscriptionTable.insert {
                 it[userId] = subscription.userId
                 it[username] = subscription.username
             }
-        }
-    }
 
-    fun remove(userId: Long) {
+            return@transaction true
+        }
+
+    fun remove(userId: Long): Boolean =
         transaction {
+            val dbSubscription = SubscriptionTable.select {
+                SubscriptionTable.userId eq userId
+            }.map { it.toSubscriptionDO() }
+
+            if (dbSubscription.isEmpty()) {
+                return@transaction false
+            }
+
             SubscriptionTable.deleteWhere {
                 SubscriptionTable.userId eq userId
             }
+
+            return@transaction true
         }
-    }
+
+    private fun ResultRow.toSubscriptionDO(): SubscriptionDO =
+        SubscriptionDO(
+            this[SubscriptionTable.userId],
+            this[SubscriptionTable.username]
+        )
 }
