@@ -1,9 +1,6 @@
 package bot
 
-import domain.GetGoneForeverTShirts
-import domain.Subscribe
-import domain.Unsubscribe
-import domain.toTextMessage
+import domain.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,6 +54,10 @@ class SubscribeCommand(
     override fun action(bot: Bot, update: Update, args: List<String>) {
         update.message?.let {
             subscribe(it.chat.id, it.chat.username ?: "unknown")
+            bot.sendMessage(it.chat.id, "You'll be notified every day with " +
+                "the updated last gone forever t-shirts from Qwertee website. " +
+                "If you want to check the current gone forever t-shirts," +
+                " run the command /goneforever")
         }
     }
 }
@@ -71,6 +72,10 @@ class UnsubscribeCommand(
     override fun action(bot: Bot, update: Update, args: List<String>) {
         update.message?.let {
             unsubscribe(it.chat.id)
+            bot.sendMessage(it.chat.id, "You'll stop receiving notifications " +
+                "about last Qwertee's website gone forever t-shirts. If you want to check " +
+                "the current gone forever t-shirts, run /goneforever command. If you want to " +
+                "restart receiving the t-shirt updates again, run the /subscribe command")
         }
     }
 
