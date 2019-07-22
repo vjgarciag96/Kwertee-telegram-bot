@@ -2,6 +2,7 @@ package bot
 
 import domain.GetGoneForeverTShirts
 import domain.Subscribe
+import domain.Unsubscribe
 import domain.toTextMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -58,4 +59,19 @@ class SubscribeCommand(
             subscribe(it.chat.id, it.chat.username ?: "unknown")
         }
     }
+}
+
+class UnsubscribeCommand(
+    private val unsubscribe: Unsubscribe
+) : BotCommand {
+
+    override val name: String
+        get() = "unsubscribe"
+
+    override fun action(bot: Bot, update: Update, args: List<String>) {
+        update.message?.let {
+            unsubscribe(it.chat.id)
+        }
+    }
+
 }

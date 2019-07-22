@@ -1,9 +1,6 @@
 package ioc
 
-import bot.GoneForeverTShirtsCommand
-import bot.MyBot
-import bot.StartCommand
-import bot.SubscribeCommand
+import bot.*
 import data.local.SubscriptionsLocalDataSource
 import data.local.exposed.SetUpDatabase
 import data.remote.QwerteeWebScrapper
@@ -30,12 +27,14 @@ val myBotModule = module {
     factory { StartCommand() }
     factory { GoneForeverTShirtsCommand(get()) }
     factory { SubscribeCommand(get()) }
+    factory { UnsubscribeCommand(get()) }
 
     // use cases
     factory { SendPhotoMessage(get()) }
     factory { SendTextMessage(get()) }
     factory { GetGoneForeverTShirts(get()) }
     factory { Subscribe(get()) }
+    factory { Unsubscribe(get()) }
     factory { GetSubscriptions(get()) }
     factory { PublishGoneForeverTShirts(get()) }
     factory { FetchGoneForeverTShirtsTask(get(), get(), get()) }
@@ -63,9 +62,11 @@ val myBotModule = module {
                 val startCommand: StartCommand = get()
                 val goneForeverTShirtsCommand: GoneForeverTShirtsCommand = get()
                 val subscribeCommand: SubscribeCommand = get()
+                val unsubscribeCommand: UnsubscribeCommand = get()
                 command(startCommand.name, startCommand::action)
                 command(goneForeverTShirtsCommand.name, goneForeverTShirtsCommand::action)
                 command(subscribeCommand.name, subscribeCommand::action)
+                command(unsubscribeCommand.name, unsubscribeCommand::action)
             }
         }.build())
     }
