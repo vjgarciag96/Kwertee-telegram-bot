@@ -9,6 +9,10 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tees.data.remote.JsoupHtmlParser
+import tees.data.remote.QwerteeConfig
+import tees.data.remote.QwerteeWebScrapper
+import tees.data.remote.TeeDto
 
 class QwerteeWebScrapperIT {
 
@@ -41,21 +45,21 @@ class QwerteeWebScrapperIT {
         val tShirtsResult = sut.getGoneForeverTShirts()
 
         val expectedTShirts = listOf(
-            TShirtDTO(
+            TeeDto(
                 eurPrice = "11",
                 usdPrice = "12",
                 gbpPrice = "9",
                 title = "How to Deal With My Feelings",
                 imageUrl = "https://cdn.qwertee.com/images/designs/product-thumbs/1565778110-151549-mens-450x540.jpg"
             ),
-            TShirtDTO(
+            TeeDto(
                 eurPrice = "11",
                 usdPrice = "12",
                 gbpPrice = "9",
                 title = "Calavera Witched Cat",
                 imageUrl = "https://cdn.qwertee.com/images/designs/product-thumbs/1565705530-151471-mens-450x540.jpg"
             ),
-            TShirtDTO(
+            TeeDto(
                 eurPrice = "11",
                 usdPrice = "12",
                 gbpPrice = "9",
@@ -74,21 +78,21 @@ class QwerteeWebScrapperIT {
         val tShirtsResult = sut.getLastChanceTees()
 
         val expectedTShirts = listOf(
-            TShirtDTO(
+            TeeDto(
                 eurPrice = "13",
                 usdPrice = "14",
                 gbpPrice = "11",
                 title = "Le Petit Magicien Noir",
                 imageUrl = "https://cdn.qwertee.com/images/designs/product-thumbs/1565262638-151127-mens-450x540.jpg"
             ),
-            TShirtDTO(
+            TeeDto(
                 eurPrice = "13",
                 usdPrice = "14",
                 gbpPrice = "11",
                 title = "Nier:2B",
                 imageUrl = "https://cdn.qwertee.com/images/designs/product-thumbs/1565179403-150984-mens-450x540.jpg"
             ),
-            TShirtDTO(
+            TeeDto(
                 eurPrice = "13",
                 usdPrice = "14",
                 gbpPrice = "11",
