@@ -8,12 +8,12 @@ import org.koin.core.inject
 object BotApplication : KoinComponent {
 
     private val bot by inject<MyBot>()
-    private val fetchGoneForeverTShirts by inject<ScheduleTeesFetching>()
+    private val scheduleTeesFetching by inject<ScheduleTeesFetching>()
     private val setUpDatabase by inject<SetUpDatabase>()
 
     fun run() {
         setUpDatabase()
-        fetchGoneForeverTShirts()
+        scheduleTeesFetching()
         bot.runWithPolling()
     }
 }
