@@ -1,13 +1,13 @@
 package bot
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import io.mockk.mockk
+import io.mockk.verify
 import me.ivmg.telegram.Bot
 import org.junit.Test
 
 class MyBotTest {
 
-    private val bot: Bot = mock()
+    private val bot = mockk<Bot>(relaxed = true)
 
     private val myBot: MyBot = MyBot(bot)
 
@@ -23,6 +23,6 @@ class MyBotTest {
     }
 
     private fun thenBotStartsPolling() {
-        verify(bot).startPolling()
+        verify{ bot.startPolling() }
     }
 }

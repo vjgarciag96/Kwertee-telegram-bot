@@ -1,6 +1,7 @@
 package data.remote
 
 import domain.TShirt
+import org.jsoup.nodes.Element
 
 fun TShirtDTO.toDomainModel(): TShirt = TShirt(
     eurPrice.plus("€"),
@@ -9,3 +10,7 @@ fun TShirtDTO.toDomainModel(): TShirt = TShirt(
     title,
     imageUrl
 )
+
+interface QwerteeTShirtMapper {
+
+}

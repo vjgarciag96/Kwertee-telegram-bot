@@ -1,5 +1,9 @@
 package data.remote
 
+data class QwerteeConfig(
+    val baseUrl: String
+)
+
 data class TShirtDTO(
     val eurPrice: String,
     val usdPrice: String,

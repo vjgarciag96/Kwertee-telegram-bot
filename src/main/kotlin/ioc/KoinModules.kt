@@ -3,18 +3,16 @@ package ioc
 import bot.*
 import data.local.SubscriptionsLocalDataSource
 import data.local.exposed.SetUpDatabase
+import data.remote.JsoupHtmlParser
 import data.remote.QwerteeWebScrapper
-import data.remote.WebScrapper
 import data.repository.SubscriptionsRepository
 import data.repository.TShirtRepository
 import domain.*
 import ioc.BotTokenProperty.BOT_TOKEN
-import ioc.BotTokenProperty.QWERTEE_URL
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.dispatcher.command
+import okhttp3.OkHttpClient
 import org.jetbrains.exposed.sql.Database
-import org.jsoup.Connection
-import org.jsoup.Jsoup
 import org.koin.dsl.module
 
 object BotTokenProperty {
@@ -52,8 +50,9 @@ val myBotModule = module {
     factory { SetUpDatabase(get()) }
 
     // web scrapper
-    factory { WebScrapper() }
-    factory { QwerteeWebScrapper(get(), Jsoup.connect(getProperty(QWERTEE_URL)).method(Connection.Method.GET)) }
+    factory { JsoupHtmlParser() }
+    factory { OkHttpClient.Builder().build() }
+    factory { QwerteeWebScrapper(get(), get(), get()) }
 
     // bot
     single {
