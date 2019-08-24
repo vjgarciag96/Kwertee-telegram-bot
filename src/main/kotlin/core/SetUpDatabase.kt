@@ -13,8 +13,8 @@ class SetUpDatabase(
 
     operator fun invoke() {
         transaction(database) {
-            SchemaUtils.create(SubscriptionTable)
-            SchemaUtils.create(TeesTable)
+            SchemaUtils.createMissingTablesAndColumns(SubscriptionTable)
+            SchemaUtils.createMissingTablesAndColumns(TeesTable)
         }
     }
 }
