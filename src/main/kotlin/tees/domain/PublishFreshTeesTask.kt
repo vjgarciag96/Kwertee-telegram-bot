@@ -1,6 +1,5 @@
 package tees.domain
 
-import core.TimeProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +13,7 @@ class PublishFreshTeesTask(
     private val publicationsRepository: PublicationsRepository,
     private val getSubscriptions: GetSubscriptions,
     private val publishPromotedTees: PublishPromotedTees,
-    private val timeProvider: TimeProvider
+    private val timeToLiveHandler: TimeToLiveHandler
 ) {
 
     operator fun invoke() {
@@ -48,12 +47,11 @@ class PublishFreshTeesTask(
     private fun getDelayToFetchNewPromotedTees(): Long {
         val lastPublicationTimeToLive = publicationsRepository.lastPublicationTimeToLive
         val lastPublicationTimestamp = publicationsRepository.lastPublicationTimestamp
-        val currentTimeMillis = timeProvider.currentTimeMillis()
 
         return if (lastPublicationTimestamp == null || lastPublicationTimeToLive == null) {
             0
         } else {
-            maxOf(0, lastPublicationTimestamp + (lastPublicationTimeToLive * 1000) - currentTimeMillis)
+            timeToLiveHandler.delayUntilExpiration(lastPublicationTimestamp, lastPublicationTimeToLive)
         }
     }
 }

@@ -5,11 +5,13 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import tees.domain.TimeToLiveHandler
 import tees.data.local.exposed.TeeEntity
 import tees.data.local.exposed.TeesTable
 
 class TeesLocalDataSource(
-    private val timeProvider: TimeProvider
+    private val timeProvider: TimeProvider,
+    private val timeToLiveHandler: TimeToLiveHandler
 ) {
 
     fun fetchPromoted(): PromotedTeesDO? = transaction {
@@ -22,9 +24,8 @@ class TeesLocalDataSource(
 
         val timeToLive = anyStorageTee.getTimeToLive()
         val storageTimestamp = anyStorageTee.getStorageTimestamp()
-        val currentTimeMillis = timeProvider.currentTimeMillis()
 
-        val isValidData = currentTimeMillis.minus(storageTimestamp) < timeToLive * 1000
+        val isValidData = timeToLiveHandler.isValid(storageTimestamp, timeToLive)
 
         if (isValidData) {
             val goneForeverTees = storageTeesResult.filter {

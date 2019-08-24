@@ -12,4 +12,5 @@ val teesDomainModule = module {
     factory { PublishGoneForeverTees(get(), get()) }
     factory { PublishLastChanceTees(get(), get()) }
     factory { PublishPromotedTees(get(), get()) }
+    factory { TimeToLiveHandler(get()) }
 }
