@@ -2,8 +2,6 @@ package bot
 
 import bot.actions.botActionsModule
 import bot.commands.*
-import me.ivmg.telegram.Bot
-import me.ivmg.telegram.dispatcher.command
 import org.koin.dsl.module
 
 const val BOT_TOKEN_CONFIG_FIELD_KEY = "bot-token-property"

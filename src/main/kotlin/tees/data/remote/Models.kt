@@ -7,3 +7,9 @@ data class TeeDto(
     val title: String,
     val imageUrl: String
 )
+
+data class PromotedTeesDto(
+    val timeToLive: Int,
+    val goneForeverTees: List<TeeDto>, 
+    val lastChanceTees: List<TeeDto>
+)

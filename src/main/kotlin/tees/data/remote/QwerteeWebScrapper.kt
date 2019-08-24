@@ -17,22 +17,40 @@ class QwerteeWebScrapper(
 
     // TODO: Replace List<TeeDto> by Either<L, R> to propagate internal errors
     // TODO: handle execute() IOException
-    suspend fun getGoneForeverTShirts(): List<TeeDto> {
+    fun getGoneForeverTShirts(): List<TeeDto> {
         val rawQwerteeHtml = getQwerteeHtml() ?: return emptyList()
 
         val qwerteeHtml = jsoupHtmlParser.parse(rawQwerteeHtml)
         val goneForeverTShirtsContainer = qwerteeHtml.select(".big-slides").first()
         val goneForeverTShirtsDivs = goneForeverTShirtsContainer.select(".index-tee")
-        return goneForeverTShirtsDivs.toTShirtDtos()
+        return goneForeverTShirtsDivs.toTeeDtos()
     }
 
-    suspend fun getLastChanceTees(): List<TeeDto> {
+    fun getLastChanceTees(): List<TeeDto> {
         val rawQwerteeHtml = getQwerteeHtml() ?: return emptyList()
 
         val qwerteeHtml = jsoupHtmlParser.parse(rawQwerteeHtml)
         val lastChanceTeesContainer = qwerteeHtml.select(".big-slides").last()
         val lastChanceTeesDivs = lastChanceTeesContainer.select(".index-tee")
-        return lastChanceTeesDivs.toTShirtDtos()
+        return lastChanceTeesDivs.toTeeDtos()
+    }
+
+    fun fetchPromoted(): PromotedTeesDto {
+        val rawQwerteeHtml = getQwerteeHtml() ?: error("Is needed to have qwertee HTML in order to fetch promotions")
+
+        val qwerteeHtml = jsoupHtmlParser.parse(rawQwerteeHtml)
+
+        val timeToLive = qwerteeHtml.select("#content > div.index-countdown").attr("data-time")
+        val goneForeverTShirtsContainer = qwerteeHtml.select(".big-slides").first()
+        val lastChanceTeesContainer = qwerteeHtml.select(".big-slides").last()
+        val goneForeverTShirtsDivs = goneForeverTShirtsContainer.select(".index-tee")
+        val lastChanceTeesDivs = lastChanceTeesContainer.select(".index-tee")
+
+        return PromotedTeesDto(
+            timeToLive = timeToLive.toInt(),
+            goneForeverTees = goneForeverTShirtsDivs.toTeeDtos(),
+            lastChanceTees = lastChanceTeesDivs.toTeeDtos()
+        )
     }
 
     private fun getQwerteeHtml(): String? {
@@ -42,9 +60,9 @@ class QwerteeWebScrapper(
         return response.body?.string()
     }
 
-    private fun Elements.toTShirtDtos(): List<TeeDto> = map { element -> element.toTShirtDto() }
+    private fun Elements.toTeeDtos(): List<TeeDto> = map { element -> element.toTeeDto() }
 
-    private fun Element.toTShirtDto(): TeeDto =
+    private fun Element.toTeeDto(): TeeDto =
         TeeDto(
             eurPrice = attr("data-tee-price-eur"),
             usdPrice = attr("data-tee-price-usd"),

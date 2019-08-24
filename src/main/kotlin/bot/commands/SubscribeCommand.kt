@@ -17,7 +17,7 @@ class SubscribeCommand(
 
             if (subscribeResult) {
                 bot.sendMessage(it.chat.id, "You'll be notified every day with " +
-                    "the updated 'gone forever' t-shirts from Qwertee website. " +
+                    "the promoted t-shirts from Qwertee website. " +
                     "If you want to check the current 'gone forever' t-shirts," +
                     " run the command /goneforever")
             } else {
