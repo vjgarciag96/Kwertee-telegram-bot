@@ -9,7 +9,8 @@ const val BOT_TOKEN_CONFIG_FIELD_KEY = "bot-token-property"
 val botModule = module {
     single {
         val startCommand: StartCommand = get()
-        val goneForeverTShirtsCommand: GoneForeverTShirtsCommand = get()
+        val goneForeverTeesCommand: GoneForeverTeesCommand = get()
+        val lastChanceTeesCommand: LastChanceTeesCommand = get()
         val subscribeCommand: SubscribeCommand = get()
         val unsubscribeCommand: UnsubscribeCommand = get()
         val helpCommand: HelpCommand = get()
@@ -17,7 +18,8 @@ val botModule = module {
         val bot = bot.get(
             getProperty(BOT_TOKEN_CONFIG_FIELD_KEY),
             startCommand,
-            goneForeverTShirtsCommand,
+            goneForeverTeesCommand,
+            lastChanceTeesCommand,
             subscribeCommand,
             unsubscribeCommand,
             helpCommand

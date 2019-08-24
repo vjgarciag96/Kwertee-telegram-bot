@@ -3,8 +3,9 @@ package tees.domain
 import org.koin.dsl.module
 
 val teesDomainModule = module {
-    factory { FetchGoneForeverTees(get()) }
     factory { TeesBL(get(), get()) }
+    factory { FetchGoneForeverTees(get()) }
+    factory { FetchLastChanceTees(get()) }
     factory { FetchPromotedTees(get()) }
     factory { FetchTeesTask(get(), get(), get()) }
     factory { PublishFreshTeesTask(get(), get(), get(), get(), get()) }

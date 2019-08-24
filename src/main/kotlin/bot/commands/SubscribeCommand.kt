@@ -18,8 +18,8 @@ class SubscribeCommand(
             if (subscribeResult) {
                 bot.sendMessage(it.chat.id, "You'll be notified every day with " +
                     "the promoted t-shirts from Qwertee website. " +
-                    "If you want to check the current 'gone forever' t-shirts," +
-                    " run the command /goneforever")
+                    "If you want to check the current promoted t-shirts," +
+                    " run the command /promoted")
             } else {
                 bot.sendMessage(it.chat.id, "You are already subscribed")
             }

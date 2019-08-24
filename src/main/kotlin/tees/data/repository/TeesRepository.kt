@@ -13,6 +13,8 @@ class TeesRepository(
 
     suspend fun fetchGoneForever(): List<TeeData> = teesRemoteDataSource.fetchGoneForever().map(TeeDto::toDataModel)
 
+    suspend fun fetchLastChance(): List<TeeData> = teesRemoteDataSource.fetchLastChance().map(TeeDto::toDataModel)
+
     suspend fun fetchPromoted(): PromotedTeesData {
         val localPromotedTees = teesLocalDataSource.fetchPromoted()
 
