@@ -1,9 +1,11 @@
 package publications
 
 import core.TimeProvider
+import tees.domain.TimeToLiveHandler
 
 class PublicationsRepository(
-    private val timeProvider: TimeProvider
+    private val timeProvider: TimeProvider,
+    private val timeToLiveHandler: TimeToLiveHandler
 ) {
 
     var lastPublicationTimestamp: Long? = null
@@ -15,12 +17,9 @@ class PublicationsRepository(
         }
 
     fun isNeededToPublish(): Boolean {
-        if (lastPublicationTimestamp == null || lastPublicationTimeToLive == null) {
-            return true
-        }
+        val timestamp = lastPublicationTimestamp ?: return true
+        val timeToLive = lastPublicationTimeToLive ?: return true
 
-        val currentTimeMillis = timeProvider.currentTimeMillis()
-
-        return (currentTimeMillis - lastPublicationTimestamp!!) > lastPublicationTimeToLive!!
+        return !timeToLiveHandler.isValid(timestamp, timeToLive)
     }
 }

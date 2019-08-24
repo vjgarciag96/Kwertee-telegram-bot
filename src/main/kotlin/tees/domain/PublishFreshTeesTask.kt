@@ -16,13 +16,9 @@ class PublishFreshTeesTask(
     private val timeToLiveHandler: TimeToLiveHandler
 ) {
 
-    operator fun invoke() {
+    operator fun invoke() = CoroutineScope(Dispatchers.IO).launch {
         if (publicationsRepository.isNeededToPublish()) {
-            CoroutineScope(Dispatchers.IO).launch {
-                publishPromotedTees()
-                scheduleNextPromotedTeesPublication()
-            }
-            return
+            publishPromotedTees()
         }
 
         scheduleNextPromotedTeesPublication()
@@ -33,9 +29,8 @@ class PublishFreshTeesTask(
         val promotedTees = fetchPromotedTees()
 
         subscriptions.forEach { subscription ->
-            publishPromotedTees(subscription.userId, promotedTees.goneForeverTees)
+            publishPromotedTees(subscription.userId, promotedTees)
         }
-
     }
 
     private fun scheduleNextPromotedTeesPublication() {

@@ -5,8 +5,8 @@ class PublishPromotedTees(
     private val publishLastChanceTees: PublishLastChanceTees
 ) {
 
-    operator fun invoke(chatId: Long, tShirts: List<Tee>) {
-        publishGoneForeverTees(chatId, tShirts)
-        publishLastChanceTees(chatId, tShirts)
+    operator fun invoke(chatId: Long, promotedTees: PromotedTees) {
+        publishGoneForeverTees(chatId, promotedTees.goneForeverTees)
+        publishLastChanceTees(chatId, promotedTees.goneForeverTees)
     }
 }
