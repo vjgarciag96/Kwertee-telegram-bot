@@ -53,7 +53,7 @@ class PublishFreshTeesTask(
         return if (lastPublicationTimestamp == null || lastPublicationTimeToLive == null) {
             0
         } else {
-            maxOf(0, lastPublicationTimestamp + lastPublicationTimeToLive - currentTimeMillis)
+            maxOf(0, lastPublicationTimestamp + (lastPublicationTimeToLive * 1000) - currentTimeMillis)
         }
     }
 }

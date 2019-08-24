@@ -24,7 +24,7 @@ class TeesLocalDataSource(
         val storageTimestamp = anyStorageTee.getStorageTimestamp()
         val currentTimeMillis = timeProvider.currentTimeMillis()
 
-        val isValidData = currentTimeMillis.minus(storageTimestamp) < timeToLive
+        val isValidData = currentTimeMillis.minus(storageTimestamp) < timeToLive * 1000
 
         if (isValidData) {
             val goneForeverTees = storageTeesResult.filter {
