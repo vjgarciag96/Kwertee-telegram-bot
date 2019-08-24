@@ -7,5 +7,5 @@ class FetchLastChanceTees(
     private val teesRepository: TeesRepository
 ) {
 
-    suspend operator fun invoke(): List<TeeData> = teesRepository.fetchLastChance()
+    suspend operator fun invoke(): List<TeeData> = teesRepository.fetchLastChance().map(TeeData::toDomainModel)
 }

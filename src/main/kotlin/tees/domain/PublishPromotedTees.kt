@@ -7,6 +7,6 @@ class PublishPromotedTees(
 
     operator fun invoke(chatId: Long, promotedTees: PromotedTees) {
         publishGoneForeverTees(chatId, promotedTees.goneForeverTees)
-        publishLastChanceTees(chatId, promotedTees.goneForeverTees)
+        publishLastChanceTees(chatId, promotedTees.lastChanceTees)
     }
 }
