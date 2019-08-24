@@ -11,6 +11,7 @@ val botModule = module {
         val startCommand: StartCommand = get()
         val goneForeverTeesCommand: GoneForeverTeesCommand = get()
         val lastChanceTeesCommand: LastChanceTeesCommand = get()
+        val promotedTeesCommand: PromotedTeesCommand = get()
         val subscribeCommand: SubscribeCommand = get()
         val unsubscribeCommand: UnsubscribeCommand = get()
         val helpCommand: HelpCommand = get()
@@ -20,6 +21,7 @@ val botModule = module {
             startCommand,
             goneForeverTeesCommand,
             lastChanceTeesCommand,
+            promotedTeesCommand,
             subscribeCommand,
             unsubscribeCommand,
             helpCommand
