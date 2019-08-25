@@ -2,6 +2,7 @@ import bot.BotApplication
 import bot.botModules
 import core.coreModule
 import org.koin.core.context.startKoin
+import publications.data.publicationsDataModule
 import publications.publicationsModule
 import subscriptions.subscriptionsModules
 import tees.teesModules

@@ -1,7 +1,6 @@
 package publications
 
-import org.koin.dsl.module
+import publications.data.publicationsDataModule
+import publications.domain.publicationsDomainModule
 
-val publicationsModule = module {
-    single { PublicationsRepository(get(), get()) }
-}
+val publicationsModule = publicationsDataModule + publicationsDomainModule

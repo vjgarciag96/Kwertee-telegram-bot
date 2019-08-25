@@ -1,16 +1,16 @@
 package tees.domain
 
-import publications.PublicationsRepository
+import publications.domain.SetLastPublicationTimeToLive
 import tees.data.repository.TeesRepository
 
 class TeesBL(
     private val teesRepository: TeesRepository,
-    private val publicationsRepository: PublicationsRepository
+    private val setLastPublicationTimeToLive: SetLastPublicationTimeToLive
 ) {
 
     suspend fun fetchPromoted(): PromotedTees {
         val promotedTees = teesRepository.fetchPromoted()
-        publicationsRepository.lastPublicationTimeToLive = promotedTees.timeToLive
+        setLastPublicationTimeToLive(promotedTees.timeToLive)
         return promotedTees.toDomainModel()
     }
 }
