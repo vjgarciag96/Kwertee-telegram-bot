@@ -1,6 +1,7 @@
 package publications
 
-import publications.data.publicationsDataModule
+import publications.data.local.publicationsLocalDataModule
+import publications.data.repository.publicationsRepositoryDataModule
 import publications.domain.publicationsDomainModule
 
-val publicationsModule = publicationsDataModule + publicationsDomainModule
+val publicationsModule = publicationsRepositoryDataModule + publicationsLocalDataModule + publicationsDomainModule

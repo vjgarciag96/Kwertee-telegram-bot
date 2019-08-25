@@ -13,15 +13,18 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tees.data.local.exposed.TeeEntity
 import tees.data.local.exposed.TeesTable
+import tees.domain.TimeToLiveHandler
 
 class TeesLocalDataSourceIT {
 
     private val database by lazy { Database.connect(url = "jdbc:sqlite:src/test/resources/qwertee.db", driver = "org.sqlite.JDBC") }
 
     private val timeProviderMock = mockk<TimeProvider>(relaxed = true)
+    private val timeToLiveHandlerMock = mockk<TimeToLiveHandler>()
 
     private val sut = TeesLocalDataSource(
-        timeProvider = timeProviderMock
+        timeProvider = timeProviderMock,
+        timeToLiveHandler = timeToLiveHandlerMock
     )
 
     @BeforeEach
@@ -60,11 +63,8 @@ class TeesLocalDataSourceIT {
 
     @Test
     fun `fetchPromoted returns tees if there are previous valid stored tees`() {
-        givenThereArePreviousTeesOnDb(
-            timeToLive = ANY_TIME_TO_LIVE,
-            storageTimestamp = ANY_TIMESTAMP_MILLIS
-        )
-        givenAnyCurrentTimeMillis(ANY_TIMESTAMP_MILLIS + 1)
+        givenThereArePreviousTeesOnDb()
+        givenAnyTeeIsValid()
 
         val fetchPromotedResult = sut.fetchPromoted()
 
@@ -142,8 +142,12 @@ class TeesLocalDataSourceIT {
         }
     }
 
-    private fun givenAnyCurrentTimeMillis(anyTimestamp: Long) {
+    private fun givenAnyCurrentTimeMillis(anyTimestamp: Long = ANY_TIMESTAMP_MILLIS) {
         every { timeProviderMock.currentTimeMillis() } returns anyTimestamp
+    }
+
+    private fun givenAnyTeeIsValid() {
+        every { timeToLiveHandlerMock.isValid(any(), any()) } returns true
     }
 
     private companion object {

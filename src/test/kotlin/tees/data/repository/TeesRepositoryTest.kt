@@ -45,6 +45,7 @@ class TeesRepositoryTest {
 
     private fun givenThereAreLocalTees() {
         every { teesLocalDataSourceMock.fetchPromoted() } returns promotedTees(
+            timeToLive = ANY_TIME_TO_LIVE,
             goneForeverTees = listOf(
                 tee(
                     eurPrice = ANY_PRICE,
@@ -97,6 +98,7 @@ class TeesRepositoryTest {
 
     private fun thenLocalContentIsReturned(fetchPromotedResult: PromotedTeesData) {
         val expectedPromotedResult = PromotedTeesData(
+            timeToLive = ANY_TIME_TO_LIVE,
             goneForeverTees = listOf(
                 TeeData(
                     eurPrice = ANY_PRICE,
@@ -121,6 +123,7 @@ class TeesRepositoryTest {
 
     private fun thenRemoteContentIsReturned(fetchPromotedResult: PromotedTeesData) {
         val expectedPromotedResult = PromotedTeesData(
+            timeToLive = ANY_TIME_TO_LIVE,
             goneForeverTees = listOf(
                 TeeData(
                     eurPrice = ANY_RAW_PRICE.toInt(),

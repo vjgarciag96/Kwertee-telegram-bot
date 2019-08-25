@@ -1,6 +1,6 @@
 package publications.domain
 
-import publications.data.PublicationsRepository
+import publications.data.repository.PublicationsRepository
 import tees.domain.TimeToLiveHandler
 
 class IsNeededToPublish(
@@ -9,9 +9,8 @@ class IsNeededToPublish(
 ) {
 
     suspend operator fun invoke(): Boolean {
-        val timestamp = publicationsRepository.lastPublicationTimestamp ?: return true
-        val timeToLive = publicationsRepository.lastPublicationTimeToLive ?: return true
+        val lastPublicationInfo = publicationsRepository.getLastPublicationInfo() ?: return true
 
-        return !timeToLiveHandler.isValid(timestamp, timeToLive)
+        return !timeToLiveHandler.isValid(lastPublicationInfo.timestamp, lastPublicationInfo.timeToLive)
     }
 }

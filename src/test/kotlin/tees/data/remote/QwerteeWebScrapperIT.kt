@@ -32,7 +32,7 @@ class QwerteeWebScrapperIT {
     }
 
     @Test
-    fun `Gets gone forever t-shirts`() {
+    fun `Gets gone forever`() {
         givenAnyMockedQwerteeHtml()
 
         val goneForeverTeesResult = sut.getGoneForeverTShirts()
