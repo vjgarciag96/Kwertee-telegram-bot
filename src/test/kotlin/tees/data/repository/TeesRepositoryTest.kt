@@ -2,9 +2,7 @@ package tees.data.repository
 
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import junit.framework.TestCase.assertEquals
 import org.junit.jupiter.api.Test
 import tees.data.local.TeesLocalDataSource
 import tees.data.local.promotedTees
@@ -13,7 +11,6 @@ import tees.data.remote.PromotedTeesDto
 import tees.data.remote.TeesRemoteDataSource
 import tees.data.remote.teeDto
 
-@ExperimentalCoroutinesApi
 class TeesRepositoryTest {
 
     private val teesRemoteDataSourceMock = mockk<TeesRemoteDataSource>()
@@ -25,7 +22,7 @@ class TeesRepositoryTest {
     )
 
     @Test
-    fun `fetchPromoted returns local content when there are local tees`() = runBlockingTest {
+    fun `fetchPromoted returns local content when there are local tees`()  {
         givenThereAreLocalTees()
 
         val fetchPromotedResult = whenPromotedTeesAreFetched()
@@ -34,7 +31,7 @@ class TeesRepositoryTest {
     }
 
     @Test
-    fun `fetchPromoted returns remote content when there are not local tees`() = runBlockingTest {
+    fun `fetchPromoted returns remote content when there are not local tees`() {
         givenThereAreNotLocalTees()
         givenAnyRemoteTees()
 
@@ -94,7 +91,7 @@ class TeesRepositoryTest {
         )
     }
 
-    private suspend fun whenPromotedTeesAreFetched(): PromotedTeesData = sut.fetchPromoted()
+    private fun whenPromotedTeesAreFetched(): PromotedTeesData = sut.fetchPromoted()
 
     private fun thenLocalContentIsReturned(fetchPromotedResult: PromotedTeesData) {
         val expectedPromotedResult = PromotedTeesData(
