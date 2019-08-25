@@ -8,7 +8,7 @@ import me.ivmg.telegram.entities.Update
 import tees.domain.FetchPromotedTees
 import tees.domain.toTextMessage
 
-class PromotedTeesCommand(private val fetchPromotedTees: FetchPromotedTees): BotCommand {
+class PromotedTeesCommand(private val fetchPromotedTees: FetchPromotedTees) : BotCommand {
 
     override val name: String
         get() = "promoted"

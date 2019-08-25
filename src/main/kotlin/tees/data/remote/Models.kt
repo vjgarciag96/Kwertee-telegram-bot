@@ -10,6 +10,6 @@ data class TeeDto(
 
 data class PromotedTeesDto(
     val timeToLive: Int,
-    val goneForeverTees: List<TeeDto>, 
+    val goneForeverTees: List<TeeDto>,
     val lastChanceTees: List<TeeDto>
 )

@@ -1,7 +1,11 @@
 package tees.data.local
 
 import core.TimeProvider
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.Query
+import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.deleteAll
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import tees.domain.TimeToLiveHandler
 import tees.data.local.exposed.TeeEntity
@@ -57,7 +61,6 @@ class TeesLocalDataSource(
         storePromoted(promotedTees)
     }
 
-
     private fun areValidTees(storageTees: Query): Boolean {
         val anyStorageTee = storageTees.firstOrNull() ?: return false
 
@@ -92,4 +95,3 @@ class TeesLocalDataSource(
             this.type = type
         }
 }
-

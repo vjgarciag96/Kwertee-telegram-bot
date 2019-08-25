@@ -1,6 +1,6 @@
 package bot
 
-import bot.commands.*
+import bot.commands.BotCommand
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.dispatcher.command
 

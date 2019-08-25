@@ -3,7 +3,6 @@ package tees.domain
 import core.ExecutorServiceFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.invoke
 import kotlinx.coroutines.launch
 import publications.domain.GetLastPublicationInfo
 import publications.domain.IsNeededToPublish

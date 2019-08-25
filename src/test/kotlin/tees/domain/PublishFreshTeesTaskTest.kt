@@ -7,14 +7,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Test
 import publications.domain.GetLastPublicationInfo
 import publications.domain.IsNeededToPublish
 import publications.domain.Publication
 import subscriptions.domain.GetSubscriptions
-import subscriptions.domain.Subscription
 import java.util.concurrent.Callable
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit

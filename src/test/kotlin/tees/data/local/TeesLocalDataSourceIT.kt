@@ -3,7 +3,9 @@ package tees.data.local
 import core.TimeProvider
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.Assert.*
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertNull
+import junit.framework.TestCase.assertNotNull
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.selectAll
@@ -44,7 +46,7 @@ class TeesLocalDataSourceIT {
     @Test
     fun `fetchGoneForever returns gone forever tees is there are previous valid stored tees`() {
         givenAnyPreviousTeeOnDb(title = "gone forever", teeType = TypeDO.GONE_FOREVER)
-        givenAnyPreviousTeeOnDb(title = "last chance",teeType = TypeDO.LAST_CHANCE)
+        givenAnyPreviousTeeOnDb(title = "last chance", teeType = TypeDO.LAST_CHANCE)
         givenAnyTeeIsValid()
 
         val fetchGoneForeverResult = sut.fetchGoneForever()
@@ -73,7 +75,7 @@ class TeesLocalDataSourceIT {
     @Test
     fun `fetchLastChance returns last chance tees if there are previous valid stored tees`() {
         givenAnyPreviousTeeOnDb(title = "gone forever", teeType = TypeDO.GONE_FOREVER)
-        givenAnyPreviousTeeOnDb(title = "last chance",teeType = TypeDO.LAST_CHANCE)
+        givenAnyPreviousTeeOnDb(title = "last chance", teeType = TypeDO.LAST_CHANCE)
         givenAnyTeeIsValid()
 
         val fetchLastChanceResult = sut.fetchLastChance()

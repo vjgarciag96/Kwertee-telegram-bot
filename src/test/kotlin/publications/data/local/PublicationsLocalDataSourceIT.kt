@@ -3,7 +3,10 @@ package publications.data.local
 import core.TimeProvider
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.Assert.*
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertNull
+import junit.framework.TestCase.assertNotNull
+import junit.framework.TestCase.assertTrue
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.and

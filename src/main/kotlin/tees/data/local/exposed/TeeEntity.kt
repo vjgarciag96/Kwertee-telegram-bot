@@ -4,8 +4,8 @@ import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 
-class TeeEntity(id: EntityID<Long>): LongEntity(id) {
-    companion object: LongEntityClass<TeeEntity>(TeesTable)
+class TeeEntity(id: EntityID<Long>) : LongEntity(id) {
+    companion object : LongEntityClass<TeeEntity>(TeesTable)
 
     var eurPrice by TeesTable.eurPrice
     var usdPrice by TeesTable.usdPrice

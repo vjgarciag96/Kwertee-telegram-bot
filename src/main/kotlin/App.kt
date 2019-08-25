@@ -9,13 +9,7 @@ import tees.teesModules
 fun main(args: Array<String>) {
     startKoin {
         fileProperties()
-        modules(
-            botModules
-                + coreModule
-                + publicationsModule
-                + subscriptionsModules
-                + teesModules
-        )
+        modules(botModules + coreModule + publicationsModule + subscriptionsModules + teesModules)
     }
 
     BotApplication.run()

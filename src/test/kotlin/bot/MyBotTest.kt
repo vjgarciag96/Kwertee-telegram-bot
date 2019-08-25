@@ -23,6 +23,6 @@ class MyBotTest {
     }
 
     private fun thenBotStartsPolling() {
-        verify{ bot.startPolling() }
+        verify { bot.startPolling() }
     }
 }

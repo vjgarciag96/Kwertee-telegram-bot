@@ -7,6 +7,3 @@ interface BotCommand {
     val name: String
     fun action(bot: Bot, update: Update, args: List<String>)
 }
-
-
-

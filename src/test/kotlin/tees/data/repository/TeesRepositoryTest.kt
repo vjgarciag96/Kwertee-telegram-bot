@@ -22,7 +22,7 @@ class TeesRepositoryTest {
     )
 
     @Test
-    fun `fetchPromoted returns local content when there are local tees`()  {
+    fun `fetchPromoted returns local content when there are local tees`() {
         givenThereAreLocalTees()
 
         val fetchPromotedResult = whenPromotedTeesAreFetched()

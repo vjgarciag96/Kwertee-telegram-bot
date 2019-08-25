@@ -40,7 +40,7 @@ class TeesRepository(
     ): List<TeeData> {
         val localTees = localDataSourceQuery()
 
-        if(localTees == null) {
+        if (localTees == null) {
             return remoteDataSourceQuery().map(TeeDto::toDataModel)
         }
 
