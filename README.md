@@ -1,4 +1,9 @@
 # Kwertee-telegram-bot
-Bot for subscribing to daily information about 'gone forever' t-shirts of www.qwertee.com. 
+Bot to get information about promoted tees available on http://www.qwertee.com/
 
-It's going to be writen in Kotlin using the library https://github.com/seik/kotlin-telegram-bot for working with telegram bot API.
+The connection with Telegram's Bots API is performed with https://github.com/seik/kotlin-telegram-bot library
+
+You can test the current bot's version in https://t.me/qwertee_tshirts_bot
+
+TBD
+
