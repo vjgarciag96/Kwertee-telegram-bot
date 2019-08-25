@@ -1,7 +1,6 @@
 package subscriptions.domain
 
 import subscriptions.data.repository.SubscriptionsRepository
-import subscriptions.domain.Subscription
 
 class GetSubscriptions(private val subscriptionsRepository: SubscriptionsRepository) {
 
