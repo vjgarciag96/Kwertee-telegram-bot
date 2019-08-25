@@ -1,12 +1,13 @@
 package tees.domain
 
+import core.ExecutorServiceFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.invoke
 import kotlinx.coroutines.launch
 import publications.domain.GetLastPublicationInfo
 import publications.domain.IsNeededToPublish
 import subscriptions.domain.GetSubscriptions
-import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class PublishFreshTeesTask(
@@ -15,8 +16,11 @@ class PublishFreshTeesTask(
     private val getSubscriptions: GetSubscriptions,
     private val publishPromotedTees: PublishPromotedTees,
     private val isNeededToPublish: IsNeededToPublish,
-    private val timeToLiveHandler: TimeToLiveHandler
+    private val timeToLiveHandler: TimeToLiveHandler,
+    executorServiceFactory: ExecutorServiceFactory
 ) {
+
+    private val scheduler = executorServiceFactory.newSingleThreadScheduledThreadPool()
 
     operator fun invoke() = CoroutineScope(Dispatchers.IO).launch {
         if (isNeededToPublish()) {
@@ -37,7 +41,6 @@ class PublishFreshTeesTask(
 
     private suspend fun scheduleNextPromotedTeesPublication() {
         val delayToFetchNewPromotedTees = getDelayToFetchNewPromotedTees()
-        val scheduler = Executors.newScheduledThreadPool(1)
         scheduler.schedule(::invoke, delayToFetchNewPromotedTees, TimeUnit.MILLISECONDS)
     }
 

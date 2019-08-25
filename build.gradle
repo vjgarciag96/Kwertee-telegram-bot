@@ -76,7 +76,7 @@ dependencies {
     // testing
     testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
-    testImplementation "io.mockk:mockk:1.9.3.kotlin12"
+    testImplementation "io.mockk:mockk:1.8.9.kotlin13"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 

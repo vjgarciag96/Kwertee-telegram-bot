@@ -13,4 +13,5 @@ val coreModule = module {
     }
     factory { SetUpDatabase(get()) }
     factory { TimeProvider() }
+    factory { ExecutorServiceFactory() }
 }
