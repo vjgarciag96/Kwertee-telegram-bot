@@ -1,5 +1,5 @@
 [![CircleCI](https://circleci.com/gh/vjgarciag96/kwertee-telegram-bot.svg?style=svg)](https://circleci.com/gh/vjgarciag96/kwertee-telegram-bot)
-# Kwertee-telegram-bot
+# kwertee-telegram-bot
 Bot to get information about promoted tees available on http://www.qwertee.com.
 
 The connection with Telegram's Bot API is performed with https://github.com/seik/kotlin-telegram-bot library
