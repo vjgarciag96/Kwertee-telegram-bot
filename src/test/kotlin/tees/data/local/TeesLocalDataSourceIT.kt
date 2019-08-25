@@ -42,6 +42,64 @@ class TeesLocalDataSourceIT {
     }
 
     @Test
+    fun `fetchGoneForever returns gone forever tees is there are previous valid stored tees`() {
+        givenAnyPreviousTeeOnDb(title = "gone forever", teeType = TypeDO.GONE_FOREVER)
+        givenAnyPreviousTeeOnDb(title = "last chance",teeType = TypeDO.LAST_CHANCE)
+        givenAnyTeeIsValid()
+
+        val fetchGoneForeverResult = sut.fetchGoneForever()
+
+        val expectedResult = listOf(
+            tee(
+                eurPrice = ANY_PRICE,
+                usdPrice = ANY_PRICE,
+                gbpPrice = ANY_PRICE,
+                title = "gone forever",
+                imageUrl = ANY_IMAGE_URL
+            )
+        )
+        assertEquals(expectedResult, fetchGoneForeverResult)
+    }
+
+    @Test
+    fun `fetchGoneForever returns null if there aren't previous valid stored tees`() {
+        givenAnyTeeIsInvalid()
+
+        val fetchGoneForeverResult = sut.fetchGoneForever()
+
+        assertNull(fetchGoneForeverResult)
+    }
+
+    @Test
+    fun `fetchLastChance returns last chance tees if there are previous valid stored tees`() {
+        givenAnyPreviousTeeOnDb(title = "gone forever", teeType = TypeDO.GONE_FOREVER)
+        givenAnyPreviousTeeOnDb(title = "last chance",teeType = TypeDO.LAST_CHANCE)
+        givenAnyTeeIsValid()
+
+        val fetchLastChanceResult = sut.fetchLastChance()
+
+        val expectedResult = listOf(
+            tee(
+                eurPrice = ANY_PRICE,
+                usdPrice = ANY_PRICE,
+                gbpPrice = ANY_PRICE,
+                title = "last chance",
+                imageUrl = ANY_IMAGE_URL
+            )
+        )
+        assertEquals(expectedResult, fetchLastChanceResult)
+    }
+
+    @Test
+    fun `fetchLastChance returns null if there aren't previous valid stored tees`() {
+        givenAnyTeeIsInvalid()
+
+        val fetchLastChanceResult = sut.fetchLastChance()
+
+        assertNull(fetchLastChanceResult)
+    }
+
+    @Test
     fun `fetchPromoted returns null if there are no previous stored tees`() {
         val fetchPromotedResult = sut.fetchPromoted()
 
@@ -50,11 +108,8 @@ class TeesLocalDataSourceIT {
 
     @Test
     fun `fetchPromoted returns null if there are previous stored tees but they're invalid`() {
-        givenThereArePreviousTeesOnDb(
-            timeToLive = 0,
-            storageTimestamp = ANY_TIMESTAMP_MILLIS
-        )
-        givenAnyCurrentTimeMillis(ANY_TIMESTAMP_MILLIS + 1)
+        givenAnyPreviousTeeOnDb()
+        givenAnyTeeIsInvalid()
 
         val fetchPromotedResult = sut.fetchPromoted()
 
@@ -63,7 +118,7 @@ class TeesLocalDataSourceIT {
 
     @Test
     fun `fetchPromoted returns tees if there are previous valid stored tees`() {
-        givenThereArePreviousTeesOnDb()
+        givenAnyPreviousTeeOnDb()
         givenAnyTeeIsValid()
 
         val fetchPromotedResult = sut.fetchPromoted()
@@ -86,7 +141,7 @@ class TeesLocalDataSourceIT {
 
     @Test
     fun `putPromoted cleans previous tees on db`() {
-        givenThereArePreviousTeesOnDb()
+        givenAnyPreviousTeeOnDb()
 
         sut.putPromoted(emptyPromotedTees())
 
@@ -124,30 +179,32 @@ class TeesLocalDataSourceIT {
 
     private fun emptyPromotedTees(): PromotedTeesDO = promotedTees()
 
-    private fun givenThereArePreviousTeesOnDb(
+    private fun givenAnyPreviousTeeOnDb(
+        title: String = ANY_TITLE,
         timeToLive: Int = ANY_TIME_TO_LIVE,
-        storageTimestamp: Long = ANY_TIMESTAMP_MILLIS
+        storageTimestamp: Long = ANY_TIMESTAMP_MILLIS,
+        teeType: TypeDO = ANY_TEE_TYPE
     ) {
         transaction {
             TeeEntity.new {
                 eurPrice = ANY_PRICE
                 usdPrice = ANY_PRICE
                 gbpPrice = ANY_PRICE
-                title = ANY_TITLE
+                this.title = title
                 imageUrl = ANY_IMAGE_URL
                 this.timeToLive = timeToLive
                 this.storageTimestamp = storageTimestamp
-                this.type = ANY_TEE_TYPE
+                this.type = teeType
             }
         }
     }
 
-    private fun givenAnyCurrentTimeMillis(anyTimestamp: Long = ANY_TIMESTAMP_MILLIS) {
-        every { timeProviderMock.currentTimeMillis() } returns anyTimestamp
-    }
-
     private fun givenAnyTeeIsValid() {
         every { timeToLiveHandlerMock.isValid(any(), any()) } returns true
+    }
+
+    private fun givenAnyTeeIsInvalid() {
+        every { timeToLiveHandlerMock.isValid(any(), any()) } returns false
     }
 
     private companion object {

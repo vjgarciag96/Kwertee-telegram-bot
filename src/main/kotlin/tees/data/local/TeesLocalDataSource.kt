@@ -1,9 +1,7 @@
 package tees.data.local
 
 import core.TimeProvider
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.deleteAll
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import tees.domain.TimeToLiveHandler
 import tees.data.local.exposed.TeeEntity
@@ -16,18 +14,10 @@ class TeesLocalDataSource(
 
     fun fetchPromoted(): PromotedTeesDO? = transaction {
         val storageTeesResult = TeesTable.selectAll()
-        val anyStorageTee = storageTeesResult.firstOrNull()
 
-        if (anyStorageTee == null) {
-            return@transaction null
-        }
+        if (areValidTees(storageTeesResult)) {
+            val timeToLive = storageTeesResult.first().getTimeToLive()
 
-        val timeToLive = anyStorageTee.getTimeToLive()
-        val storageTimestamp = anyStorageTee.getStorageTimestamp()
-
-        val isValidData = timeToLiveHandler.isValid(storageTimestamp, timeToLive)
-
-        if (isValidData) {
             val goneForeverTees = storageTeesResult.filter {
                 it[TeesTable.type] == TypeDO.GONE_FOREVER
             }.map(ResultRow::toTeeDO)
@@ -46,9 +36,35 @@ class TeesLocalDataSource(
         return@transaction null
     }
 
+    fun fetchGoneForever(): List<TeeDO>? = fetchTees(TypeDO.GONE_FOREVER)
+
+    fun fetchLastChance(): List<TeeDO>? = fetchTees(TypeDO.LAST_CHANCE)
+
+    private fun fetchTees(type: TypeDO): List<TeeDO>? = transaction {
+        val storageTees = TeesTable.select {
+            TeesTable.type eq type
+        }
+
+        if (areValidTees(storageTees)) {
+            return@transaction storageTees.map(ResultRow::toTeeDO)
+        }
+
+        return@transaction null
+    }
+
     fun putPromoted(promotedTees: PromotedTeesDO) = transaction {
         clearPromoted()
         storePromoted(promotedTees)
+    }
+
+
+    private fun areValidTees(storageTees: Query): Boolean {
+        val anyStorageTee = storageTees.firstOrNull() ?: return false
+
+        val timeToLive = anyStorageTee.getTimeToLive()
+        val storageTimestamp = anyStorageTee.getStorageTimestamp()
+
+        return timeToLiveHandler.isValid(storageTimestamp, timeToLive)
     }
 
     private fun clearPromoted(): Int = TeesTable.deleteAll()
