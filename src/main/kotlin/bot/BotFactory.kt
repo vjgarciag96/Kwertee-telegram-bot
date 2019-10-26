@@ -8,6 +8,12 @@ fun get(botToken: String, vararg commands: BotCommand): Bot = Bot.Builder()
     .apply {
         this.token = botToken
         this.updater.dispatcher.apply {
-            commands.forEach { command(it.name, it::action) }
+            commands.forEach {botCommand ->
+                command(botCommand.name) { bot, update, args ->
+                    val command = update.message
+                    checkNotNull(command)
+                    botCommand.action(bot, command, args)
+                }
+            }
         }
     }.build()
