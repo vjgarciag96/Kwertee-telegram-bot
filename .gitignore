@@ -2,3 +2,5 @@
 .gradle/*
 build/*
 config/bot_config.yml
+lib/
+out/
