@@ -1,9 +1,9 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.3.41'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.50'
 }
 
 ext.okhttp_version = "4.0.1"
-ext.coroutines_version = "1.3.0-RC2"
+ext.coroutines_version = "1.3.2"
 ext.junit_version = "5.5.1"
 
 group 'com.vjgarcia'
@@ -80,6 +80,6 @@ dependencies {
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
-    detekt "io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.RC9.2"
+    detekt "io.gitlab.arturbosch.detekt:detekt-cli:1.1.0"
     ktlint "com.github.shyiko:ktlint:0.20.0"
 }
